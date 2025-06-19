@@ -1,0 +1,29 @@
+mat-card {
+  margin-bottom: 2rem;
+}
+img {
+  background-size:cover;
+}
+mat-card {
+  max-width: 400px;
+}
+mat-card:hover {
+  box-shadow: 0.5rem 0.5rem 1rem 0.5rem var(--color-secondary);
+  cursor: pointer;
+}
+section {
+  background-color: var(--color-primary);
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 2rem;
+  height: 110vh;
+}
+mat-card-content {
+  text-align: center;
+}
+
+mat-card-header,p {
+  justify-content: center;
+  font-weight: bolder;
+}

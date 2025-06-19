@@ -1,0 +1,46 @@
+  <mat-toolbar role="heading">
+    <button mat-icon-button >
+      <mat-icon>menu</mat-icon>
+    </button>
+    <a [routerLink]="['/home']" class="logo-home-redirection"><span>Soninkrala</span></a>
+    <span class="test-spacer"></span>
+    <div class="container-header-button" *ngIf="isLoggedIn()">
+      <a mat-icon-button class="display-icon" [routerLink]="['/quiz']" routerLinkActive="router-link-active" [routerLinkActiveOptions]="{ exact: true }" *ngIf="getUserRole() === 'MEMBER'" >
+        Quiz
+      </a>
+      <a mat-icon-button class="display-icon" [routerLink]="['/alphabet']" routerLinkActive="router-link-active" [routerLinkActiveOptions]="{ exact: true }" *ngIf="getUserRole() === 'MEMBER'">
+        Alphabet
+      </a>
+      <a mat-icon-button class="display-icon">
+        Community
+      </a>
+      <a mat-icon-button class="display-icon">
+        Resources
+      </a>
+      <a mat-icon-button class="display-icon" [routerLink]="['/about-us']" routerLinkActive="router-link-active" [routerLinkActiveOptions]="{ exact: true }">
+        More about us
+      </a>
+      <a mat-icon-button class="display-icon" [routerLink]="['/contact']" routerLinkActive="router-link-active" [routerLinkActiveOptions]="{ exact: true }" >
+        Contact
+      </a>
+      <a mat-icon-button class="display-icon" (click)="this.authService.logout($event)">
+        <mat-icon fontIcon="logout"></mat-icon>
+      </a>
+    </div>
+    <div class="container-header-button" *ngIf="!isLoggedIn()">
+        <a mat-icon-button class="display-icon">
+          Community
+        </a>
+        <a mat-icon-button class="display-icon" [routerLink]="['/about-us']" routerLinkActive="router-link-active" [routerLinkActiveOptions]="{ exact: true }">
+          More about us
+        </a>
+        <a mat-icon-button class="display-icon" [routerLink]="['/contact']" routerLinkActive="router-link-active" [routerLinkActiveOptions]="{ exact: true }" >
+          Contact
+        </a>
+        <a mat-icon-button class="display-icon" [routerLink]="['/sign-in']" routerLinkActive="router-link-active" [routerLinkActiveOptions]="{ exact: true }" >
+          <mat-icon fontIcon="person"></mat-icon>
+        </a>
+    </div>
+  </mat-toolbar>
+
+

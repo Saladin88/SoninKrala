@@ -1,0 +1,43 @@
+package co.simplon.soninkrala.entities;
+
+import jakarta.persistence.*;
+
+@Entity
+@Table(name="t_photos")
+public class PhotoEntity {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name ="id")
+    private int id;
+
+    @Column(name = "picture_name")
+    private String pictureName;
+
+    @Column(name = "url_photo")
+    private String urlPhoto;
+
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public String getPictureName() {
+        return pictureName;
+    }
+
+    public void setPictureName(String pictureName) {
+        this.pictureName = pictureName;
+    }
+
+    public String getUrlPhoto() {
+        return urlPhoto;
+    }
+
+    public void setUrlPhoto(String urlPhoto) {
+        this.urlPhoto = urlPhoto;
+    }
+}

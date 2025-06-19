@@ -1,0 +1,82 @@
+package co.simplon.soninkrala.entities;
+
+import jakarta.persistence.*;
+
+import java.time.OffsetDateTime;
+
+@Entity
+@Table(name="t_answers")
+public class AnswerEntity {
+
+    @Id
+    @Column(name="id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
+
+    @Column(name="answer")
+    private String answer;
+
+    @Column(name="creation_date")
+    private OffsetDateTime creationDate;
+
+    @Column(name="is_correct_answer")
+    private Boolean correctAnswer;
+
+    @ManyToOne(fetch = FetchType.LAZY) //Many answers can be associated to one questionId
+    @JoinColumn(name="id_question")
+    private QuestionEntity idQuestion;
+
+    public AnswerEntity() {
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public String getAnswer() {
+        return answer;
+    }
+
+    public void setAnswer(String answer) {
+        this.answer = answer;
+    }
+
+    public OffsetDateTime getCreationDate() {
+        return creationDate;
+    }
+
+    public void setCreationDate(OffsetDateTime creationDate) {
+        this.creationDate = creationDate;
+    }
+
+    public Boolean getCorrectAnswer() {
+        return correctAnswer;
+    }
+
+    public void setCorrectAnswer(Boolean correctAnswer) {
+        this.correctAnswer = correctAnswer;
+    }
+
+    public QuestionEntity getIdQuestion() {
+        return idQuestion;
+    }
+
+    public void setIdQuestion(QuestionEntity id_question) {
+        this.idQuestion = id_question;
+    }
+
+    @Override
+    public String toString() {
+        return "AnswerEntity{" +
+                "id=" + id +
+                ", answer='" + answer + '\'' +
+                ", creationDate=" + creationDate +
+                ", correctAnswer=" + correctAnswer +
+                ", id_question=" + idQuestion +
+                '}';
+    }
+}

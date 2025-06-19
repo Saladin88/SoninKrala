@@ -1,0 +1,43 @@
+
+section {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  gap : 2rem;
+  background-color: var(--color-primary);
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  width: 25rem;
+}
+.button-action-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  gap: 1rem;
+}
+
+.button-action-container button[mat-flat-button] {  /* selecteur d'attribut */
+  background-color: var(--color-accent);
+  color: var(--color-text);
+}
+
+.button-action-container button[mat-flat-button]:disabled {
+  background-color: grey;
+}
+h1 {
+  color: var(--color-text);
+}
+mat-form-field input,
+mat-label,
+mat-hint,
+mat-icon {
+  color: var(--color-text) !important;
+}
+
+
+

@@ -1,0 +1,34 @@
+form {
+  display: flex;
+  flex-direction: column;
+}
+mat-dialog-content {
+  width: 35rem;
+}
+
+#submitButton {  /* selecteur d'attribut */
+  background-color: var(--color-accent);
+  color: var(--color-text);
+}
+#submitButton:disabled {
+  background-color: grey;
+
+}
+
+section {
+  background-color: var(--color-secondary);
+}
+#closeButton {
+  background-color: var(--color-icon-secondary);
+}
+#test {
+  background-color: var(--color-icon-secondary);
+}
+mat-form-field{
+  margin-bottom: 0.5rem;
+}
+mat-form-field:nth-child(1){
+  margin-top: 0.5rem;
+}
+
+

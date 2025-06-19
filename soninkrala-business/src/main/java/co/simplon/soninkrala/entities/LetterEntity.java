@@ -1,0 +1,68 @@
+package co.simplon.soninkrala.entities;
+
+import jakarta.persistence.*;
+
+@Entity
+@Table(name="t_letters")
+public class LetterEntity {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
+
+    @Column(name="letter_name")
+    private String letterName;
+
+    @Column(name = "letter_order")
+    private int letterOrder;
+
+    @OneToOne
+    @JoinColumn(name="id_audio_letter")
+    private AudioLetterEntity audioLetter;
+
+
+    @OneToOne
+    @JoinColumn(name="id_photo")
+    private PhotoEntity photoEntity;
+
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getLetterName() {
+        return letterName;
+    }
+
+    public void setLetterName(String letterName) {
+        this.letterName = letterName;
+    }
+
+    public AudioLetterEntity getAudioLetter() {
+        return audioLetter;
+    }
+
+    public void setAudioLetter(AudioLetterEntity audioLetter) {
+        this.audioLetter = audioLetter;
+    }
+
+    public PhotoEntity getPhotoEntity() {
+        return photoEntity;
+    }
+
+    public void setPhotoEntity(PhotoEntity photoEntity) {
+        this.photoEntity = photoEntity;
+    }
+
+    public int getLetterOrder() {
+        return letterOrder;
+    }
+
+    public void setLetterOrder(int letterOrder) {
+        this.letterOrder = letterOrder;
+    }
+}

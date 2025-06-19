@@ -1,0 +1,12 @@
+<section>
+  <mat-card *ngFor="let data of datas" appearance="raised">
+    <mat-card-header>
+      <mat-card-title id="cardTitle">{{data.letter.toLowerCase()}} {{data.letter}}</mat-card-title>
+    </mat-card-header>
+    <img mat-card-image [attr.src]="data.urlPhoto" alt="photo">
+    <mat-card-content>
+      <p>{{data.photoName}}</p>
+      <audio controls [attr.src]="data.urlAudio" [controlsList]="'nodownload'"></audio>
+    </mat-card-content>
+  </mat-card>
+</section>

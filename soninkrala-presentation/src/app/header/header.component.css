@@ -1,0 +1,41 @@
+.test-spacer {
+  flex: 2 1 auto;
+}
+.display-icon{
+font-size: 1rem;
+}
+.container-header-button {
+display: flex;
+flex : 2 1 auto;
+justify-content: space-evenly;
+}
+.container-header-account {
+  display: flex;
+  justify-content: space-evenly;
+  flex : 0 1 auto;
+  min-width: 11rem;
+  padding: 0;
+  margin: 0;
+}
+mat-toolbar {
+  background-color: var(--color-primary);
+
+}
+
+mat-toolbar .mat-icon,
+mat-toolbar a,
+mat-toolbar button {
+  color: var(--color-icon-secondary) ;
+}
+
+.router-link-active,
+a.router-link-active mat-icon{
+  font-weight: bold;
+  color: var(--color-accent) !important;
+}
+
+.logo-home-redirection {
+  text-decoration: none;
+  color : black;
+}
+

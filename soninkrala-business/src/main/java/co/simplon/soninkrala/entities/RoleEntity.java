@@ -1,0 +1,43 @@
+package co.simplon.soninkrala.entities;
+
+import jakarta.persistence.*;
+
+@Entity
+@Table(name="t_roles")
+public class RoleEntity {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", nullable = false)
+    private Long id;
+
+    @Column(name = "name", unique = true, nullable = false)
+    private String name;
+
+    @Column(name = "role_default", nullable = false)
+    private boolean roleDefault;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public boolean isRoleDefault() {
+        return roleDefault;
+    }
+
+    public void setRoleDefault(boolean roleDefault) {
+        this.roleDefault = roleDefault;
+    }
+}

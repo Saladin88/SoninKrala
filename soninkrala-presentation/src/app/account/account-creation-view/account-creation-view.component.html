@@ -1,0 +1,56 @@
+<section>
+
+  <h1 mat-dialog-title>Créer un compte</h1>
+  <mat-dialog-content>
+    <form [formGroup]="accountCreationFormGroup" (ngSubmit)="onSubmit()">
+      <mat-form-field appearance="outline">
+        <mat-label>Prénom</mat-label>
+        <input matInput placeholder="TOTO"  formControlName="firstname" required="true" type="text" maxlength="50">
+        <mat-error *ngIf="accountCreationFormGroup.controls.firstname.invalid && (accountCreationFormGroup.controls.firstname.dirty || accountCreationFormGroup.controls.firstname.touched)">
+          Le prénom est requis et doit être valide.</mat-error>
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Nom</mat-label>
+        <input matInput placeholder="Dupont" formControlName="lastname" required="true" type="text" maxlength="80">
+        <mat-hint>indiquer votre nom</mat-hint>
+        <mat-error *ngIf="accountCreationFormGroup.controls.lastname.invalid && (accountCreationFormGroup.controls.lastname.dirty || accountCreationFormGroup.controls.lastname.touched)">
+          Le nom est requis et doit être valide.</mat-error>
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Username</mat-label>
+        <input matInput placeholder="TOTO"  formControlName="username" required="true" type="text" maxlength="20">
+        <mat-hint>indiquer votre nom d'utilisateur</mat-hint>
+        <mat-error *ngIf="accountCreationFormGroup.controls.username.invalid && (accountCreationFormGroup.controls.username.dirty || accountCreationFormGroup.controls.username.touched)">
+          Le nom d'utilisateur est requis et doit être valide.</mat-error>
+          <mat-error *ngIf="isUserAlreadyExists && errorMessageUsername">{{this.errorMessageUsername}}</mat-error>
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Email</mat-label>
+        <input matInput placeholder="TOTO"  formControlName="email" required="true" type="email">
+        <mat-hint>indiquer votre nom adresse mail</mat-hint>
+        <mat-error *ngIf="accountCreationFormGroup.controls.email.invalid && (accountCreationFormGroup.controls.email.dirty || accountCreationFormGroup.controls.email.touched)">
+          L'adresse mail est requis et doit être valide.</mat-error>
+          <mat-error *ngIf="isUserAlreadyExists && errorMessageMail">{{this.errorMessageMail}}</mat-error>
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Password</mat-label>
+        <input matInput placeholder="AZERTY123" [type]="hidePassword() ? 'password' : 'text'" formControlName="password" required="true" minlength="8" maxlength="20">
+        <mat-hint>Indiquer votre mot de passe (min 8 charactère max 20) </mat-hint>
+        <button mat-icon-button matSuffix (click)="toggleVisibilityPassword($event)">
+          <mat-icon>{{hidePassword() ? 'visibility_off' : 'visibility'}}</mat-icon>
+        </button>
+        <mat-error *ngIf="accountCreationFormGroup.controls.password.invalid && (accountCreationFormGroup.controls.password.dirty || accountCreationFormGroup.controls.password.touched)">
+          Le mot de passe est requis et doit être valide.</mat-error>
+      </mat-form-field>
+      <mat-dialog-actions>
+        <button mat-stroked-button mat-dialog-close="true" id="closeButton">
+          Close
+        </button>
+        <button mat-flat-button type="submit"  id="submitButton" [disabled]="this.accountCreationFormGroup.invalid || this.accountCreationFormGroup.errors || this.accountCreationFormGroup.errors?.['required'] || isUserAlreadyExists">
+          Register
+        </button>
+      </mat-dialog-actions>
+    </form>
+  </mat-dialog-content>
+</section>
+
