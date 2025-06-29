@@ -18,6 +18,8 @@ mat-dialog-content {
 section {
   background-color: var(--color-secondary);
 }
+
+
 #closeButton {
   background-color: var(--color-icon-secondary);
 }
@@ -30,5 +32,15 @@ mat-form-field{
 mat-form-field:nth-child(1){
   margin-top: 0.5rem;
 }
-
+.header-title-container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-items:baseline;
+  justify-content: space-between;
+}
+#closeButtonIcon {
+  text-align: center;
+  margin-right: 1rem;
+}
 

@@ -1,4 +1,4 @@
-import { Component, OnDestroy, ViewEncapsulation, inject, signal } from '@angular/core';
+import { Component, OnDestroy, inject, signal } from '@angular/core';
 import { AccountService } from '../service/account.service';
 import { Subscription} from 'rxjs';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
@@ -20,7 +20,6 @@ import { DialogRef } from '@angular/cdk/dialog';
   imports: [MatInputModule, MatFormFieldModule, ReactiveFormsModule, MatIconModule, MatButtonModule, MatDialogModule, CommonModule],
   templateUrl: './account-creation-view.component.html',
   styleUrl: './account-creation-view.component.css',
-  encapsulation: ViewEncapsulation.None
 
 })
 export class AccountCreationViewComponent implements OnDestroy {
@@ -30,6 +29,7 @@ export class AccountCreationViewComponent implements OnDestroy {
   private readonly formBuilder = inject(FormBuilder);
   private readonly dialog = inject(DialogRef)
   isUserAlreadyExists : boolean = false;
+
   errorMessageMail! : string;
   errorMessageUsername! : string;
 
@@ -63,7 +63,7 @@ export class AccountCreationViewComponent implements OnDestroy {
     return formControlValues;
   }
   closeDialog() {
-    this.dialog.close();
+      this.dialog.close();
   }
 
   onSubmit() {

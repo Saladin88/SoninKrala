@@ -1,0 +1,26 @@
+.recording-icon {
+    color : red;
+}
+
+#record-icon-button {
+    width: 25vw;
+    height: 25vw;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0; /* important pour éviter que l'icône sorte */
+  }
+  
+  /* Agrandir l'icône sans qu'elle dépasse */
+  #record-icon-button mat-icon {
+    font-size: 5rem; /* ou une taille fixe comme 48px */
+    width: 1em;
+    height: 1em;
+    line-height: 1;
+  }
+  
+  .recording-icon {
+    color: red;
+  }
+  

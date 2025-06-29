@@ -1,0 +1,29 @@
+<section>
+    <button mat-icon-button id="record-icon-button">
+        <mat-icon  class="recording-icon" (click)="startRecording()" [fontIcon]="
+      recorderStatus === 'inactive' ? 'mic' :
+      recorderStatus === 'recording' ? 'pause' :
+      recorderStatus === 'paused' ? 'play_arrow' :
+      'help_outline'"
+      [ngClass]="{'inactive-icon': recorderStatus === 'inactive', 'recording-icon': recorderStatus === 'recording', 'paused-icon': recorderStatus === 'paused'}"></mat-icon>
+    </button>
+
+@if (recorderStatus === 'inactive') {
+    <button (click)="startRecording()">Commencer l'enregistrement audio</button>
+  }
+  
+  @else if (recorderStatus === 'recording' || recorderStatus === 'paused') {
+    <button (click)="stopRecording()">L'arrêter</button>
+    <button (click)="suspendRecording()">
+      {{ recorderStatus === 'paused' ? 'Reprendre' : 'Suspendre (pause)' }}
+    </button>
+  }
+  
+  @if (audioUrl) {
+    <form (ngSubmit)="onSubmit($event)">
+        <audio [src]="audioUrl" controls [controlsList]="'nodownload'" [formControl]="audioSubmit"></audio>
+        <button type="submit">Envoyer</button>
+    </form>
+  }
+</section>
+  
