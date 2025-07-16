@@ -13,19 +13,22 @@ export const routes: Routes = [
   },
   {
   path: 'quiz',
-  canActivate: [authGuard,roleGuard],
+  canMatch:[authGuard],
+  canActivate: [roleGuard],
   data: {roles: ['MEMBER']},
   loadComponent: () => import('./quiz/quiz.component').then(m=> m.QuizComponent),
 },
 {
   path: 'quiz/:id',
-  canActivate: [authGuard,roleGuard],
+  canMatch:[authGuard],
+  canActivate: [roleGuard],
     data: {roles: ['MEMBER']},
   loadComponent: () => import('./quiz/quiz.component').then(m=> m.QuizComponent),
 },
 {
   path: 'alphabet',
-  canActivate: [authGuard,roleGuard],
+  canMatch:[authGuard],
+  canActivate: [roleGuard],
   data: {roles: ['MEMBER']},
   loadComponent: () => import('./alphabet-audio-view/alphabet-audio-view.component').then(m=> m.AlphabetAudioViewComponent),
 
@@ -49,8 +52,12 @@ export const routes: Routes = [
 
 },
 {
-  path: 'unauthorize',
-  loadComponent: () => import('./unauthorize/unauthorize.component').then(m => m.UnauthorizeComponent)
+  path: 'unauthorized',
+  loadComponent: () => import('./unauthorized/unauthorized.component').then(m => m.UnauthorizedComponent)
+},
+{
+  path: 'error',
+  loadComponent: () => import('./global-error-view/global-error-view.component').then(m => m.GlobalErrorViewComponent)
 },
 {
   path: '**',

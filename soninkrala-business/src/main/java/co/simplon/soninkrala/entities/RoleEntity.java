@@ -14,7 +14,7 @@ public class RoleEntity {
     @Column(name = "name", unique = true, nullable = false)
     private String name;
 
-    @Column(name = "role_default", nullable = false)
+    @Column(name = "is_role_default", nullable = false)
     private boolean roleDefault;
 
     public Long getId() {

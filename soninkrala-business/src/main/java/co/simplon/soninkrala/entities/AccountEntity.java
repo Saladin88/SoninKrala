@@ -43,7 +43,7 @@ public class AccountEntity {
     @Column(name="uuid_token_expiration")
     private LocalDateTime uuidTokenExpiration;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "id_role")
     private RoleEntity role;
 

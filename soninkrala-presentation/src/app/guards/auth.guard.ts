@@ -1,12 +1,22 @@
 import { inject } from '@angular/core';
-import { CanActivateFn, Router } from '@angular/router';
+import { CanActivateFn, CanMatchFn, Route, Router, UrlSegment } from '@angular/router';
 
 
 
 
-export const authGuard: CanActivateFn = () => {
+// export const authGuard: CanActivateFn = () => {
+//   const router = inject(Router);
+//   const isLoggedIn = Boolean(localStorage.getItem('jwtToken'));
+//   if(!isLoggedIn) {
+//     router.navigate(['/home']);
+//     return false
+//   }
+//   return true;
+// };
+
+export const authGuard: CanMatchFn = (route: Route, segments: UrlSegment[]) => {
   const router = inject(Router);
-  const isLoggedIn = Boolean(localStorage.getItem('jwtToken'));
+  const isLoggedIn =localStorage.getItem('jwtToken');
   if(!isLoggedIn) {
     router.navigate(['/home']);
     return false

@@ -18,9 +18,9 @@ public class JwtProvider {
         this.issuer = issuer;
     }
 
-    public String generateToken(String subject) {
+    public String generateToken(String subject, String role) {
         Instant instant = Instant.now();
-        JWTCreator.Builder builder = JWT.create().withIssuer(issuer).withSubject(subject);
+        JWTCreator.Builder builder = JWT.create().withIssuer(issuer).withSubject(subject).withClaim("role", role);
         if (expiration > -1) {
             Instant expiresAt = instant.plusSeconds(expiration);
             builder.withExpiresAt(expiresAt);

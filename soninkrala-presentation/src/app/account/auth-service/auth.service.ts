@@ -19,4 +19,8 @@ storeResponseLogin( token : string, role : string ) : void {
   localStorage.setItem("jwtToken", token)
   localStorage.setItem("role", role)
 }
+
+get token(): string | null {
+  return localStorage.getItem("jwtToken");
+}
 }

@@ -16,6 +16,7 @@ import co.simplon.soninkrala.services.AccountService;
 import jakarta.mail.MessagingException;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -120,14 +121,14 @@ public class AccountServiceImpl implements AccountService {
         if (!isPasswordMatch) {
             throw new BadCredentialErrorMessage("Bad credentials for user : " + inputs.username());
         }
-        String jwt = jwtProvider.generateToken(inputs.username());
+        String jwt = jwtProvider.generateToken(inputs.username(),accountEntity.getRole().getName());
         return AccountMapper.toAccountLogInResponse(jwt, accountEntity);
     }
 
     @Scheduled(fixedRate = 20 * 60 * 1000) //20 minutes interval regulier
     @Transactional
     void deleteUnverifiedAccount() {
-        LocalDateTime nowMinus15min = LocalDateTime.now().minusMinutes(5);
+        LocalDateTime nowMinus15min = LocalDateTime.now().minusMinutes(15);
         accountJpaRepo.deleteAllByVerifyFalseAndCreationDateBefore(nowMinus15min);
         System.out.println("Suppression des comptes non vérifiés avant : " + nowMinus15min);
     }

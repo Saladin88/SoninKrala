@@ -10,7 +10,7 @@ public record AccountCreationRequestBody(
         @NotBlank @Size(min = 1, max = 50) String firstname,
         @NotBlank @Size(min = 1, max = 80) String lastname,
         @NotBlank @Size(min = 1, max = 20) @UniqueUsername String username,
-        @NotBlank  @Size(min = 10, max = 100) @UniqueEmail @Email String email,//Faire une regex pour bien controller input utilisateur
+        @NotBlank  @Size(min = 10, max = 100) @UniqueEmail @Email String email,
         @NotBlank @Size(min = 8, max = 20) String password // Faire egalement une regex
     ) {
 
