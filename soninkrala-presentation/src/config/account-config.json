@@ -1,0 +1,33 @@
+{
+    "config": {
+        "register": {
+        },
+        "login":{
+            "sucessToasterMessage" : "Connection réussie",
+            "errorToasterMessage" : "Mauvais identifiants"
+        },
+        "label": {
+            "username": "Nom d'utilisateur",
+            "password": "Mot de passe"
+        },
+        "title": {
+            "login": "Se connecter",
+            "register": "Créer un compte"
+
+        },
+        "hint": {
+            "username": "Min 1 max 20 caractères",
+            "password": "Min 8 max 20 caractères"
+        },
+        "error": {
+            "space": "Les espaces seuls ne sont pas autorisés",
+            "required": "Ce champ est requis",
+            "badCredentials": "mauvaises informations d'identification",
+            "minLengthPassword": "Le mot de passe doit contenir min 8 caractères"
+        },
+        "action": {
+            "login": "Se connecter",
+            "register": "Créer un compte"
+        }
+    }
+}

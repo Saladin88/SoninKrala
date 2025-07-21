@@ -1,0 +1,39 @@
+@use '@angular/material' as mat;
+
+html, body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+:root {
+  --color-primary: #191A2E;
+  --color-secondary: #7CA9E3;
+  --color-accent: #F27A0C;
+  --color-highlight: #F7B733;
+  --color-text: #FFFFFF;
+  --color-icon-secondary: #F9F9F9;
+  --color-accent-secondary: #C12026;
+}
+
+.success-snackbar .mdc-snackbar__surface {
+  background-color: green !important;
+}
+
+.error-snackbar .mdc-snackbar__surface {
+  background-color: var(--color-accent-secondary) !important;
+}
+.success-snackbar .mat-mdc-snack-bar-label {
+  color: var(--color-text) !important;
+}
+
+.error-snackbar .mat-mdc-snack-bar-label {
+  color: var(--color-text) !important;
+}
+
+
+
+

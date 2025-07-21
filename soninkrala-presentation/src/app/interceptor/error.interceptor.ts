@@ -5,15 +5,16 @@ import { catchError, throwError } from 'rxjs';
 
 export const errorInterceptor: HttpInterceptorFn = (req, next) => {
   const router = inject(Router);
+
   return next(req).pipe(
     catchError((error : HttpErrorResponse) => {
       console.error(error)
       switch(error.status) {
-        case 401 : 
-         window.alert('Token expired, vous allez être déconnecter')
-          localStorage.clear();
-          router.navigate(['/home']);
-          break;
+        // case 401 : 
+        //  window.alert('Token expired, vous allez être déconnecter')
+        //   localStorage.clear();
+        //   router.navigate(['/home']);
+        //   break;
 
         case 403 :
           router.navigate(['/unauthorized']);

@@ -67,6 +67,7 @@ public class AccountServiceImpl implements AccountService {
         account.setUuidToken(tokenUUID);
         account.setUuidTokenExpiration(LocalDateTime.now().plusMinutes(tokenExpMinutes));
         sendValidationEmail(inputs.email(), inputs.username(), tokenUUID.toString());
+        System.out.println(account.getPassword());
         return AccountMapper.toAccountCreationResponse(account);
     }
 

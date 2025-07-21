@@ -1,25 +1,39 @@
 <section>
-  <h1>Se connecter</h1>
+  <h1>{{title}}</h1>
   <form [formGroup]="loginFormGroup" (ngSubmit)="onSubmit()">
     <mat-form-field appearance="outline">
-      <mat-label>Username</mat-label>
-      <input matInput placeholder="TOTO"  formControlName="username" required="true">
-      <mat-hint>indiquer votre nom d'utilisateur</mat-hint>
+      <mat-label>{{username}}</mat-label>
+      <input matInput placeholder="Saladin98"  formControlName="username" required="true" [errorStateMatcher]="errorMatcher"  maxlength="20" autocomplete="username">
+      <mat-hint>{{hintUsername}}</mat-hint>
+  <mat-error *ngIf="usernameControl.hasError('noSpaceAllowed')">
+    {{spaceErrorText}}
+  </mat-error>
+  <mat-error *ngIf="usernameControl.hasError('required')">
+    {{requiredErrorText}}
+  </mat-error>
+  <mat-error *ngIf="invalidCredentials">fff</mat-error>
     </mat-form-field>
     <mat-form-field appearance="outline">
-      <mat-label>Password</mat-label>
-      <input matInput placeholder="AZERTY123" [type]="hidePassword() ? 'password' : 'text'" formControlName="password" required="true">
-      <mat-hint>Indiquer votre mot de passe</mat-hint>
+      <mat-label>{{password}}</mat-label>
+      <input matInput placeholder="PASSWORD123" [type]="hidePassword() ? 'password' : 'text'" formControlName="password" required="true" [errorStateMatcher]="errorMatcher"  minlength="8" maxlength="20" autocomplete="current-password webauthn">
+      <mat-hint>{{hintPassword}}</mat-hint>
       <button mat-icon-button matSuffix (click)="toggleVisibilityPassword($event)">
         <mat-icon>{{hidePassword() ? 'visibility_off' : 'visibility'}}</mat-icon>
       </button>
+      <mat-error *ngIf="passwordControl.hasError('required')">
+        {{requiredErrorText}}
+      </mat-error>
+      <mat-error *ngIf="passwordControl.hasError('minlength')">
+        {{minLengthErrorText}}
+      </mat-error>
     </mat-form-field>
+    <mat-error *ngIf="invalidCredentials">{{credentialsErrorText}}</mat-error>
     <div class="button-action-container">
       <button mat-flat-button type="submit" [disabled]="this.loginFormGroup.invalid || this.loginFormGroup.errors || this.loginFormGroup.errors?.['required']">
-        Log-in
+        {{loginBtnText}}
       </button>
       <button mat-flat-button type="button" (click)="openDialog($event)">
-        Register
+        {{registerBtnText}}
       </button>
     </div>
   </form>
