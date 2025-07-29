@@ -13,7 +13,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:application",
           "options": {
-            "outputPath": "dist/presentation-v2",
+            "outputPath": "dist",
             "index": "src/index.html",
             "browser": "src/main.ts",
             "polyfills": [
@@ -60,10 +60,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "presentationV2:build:production"
+              "buildTarget": "soninkrala-presentation:build:production"
             },
             "development": {
-              "buildTarget": "presentationV2:build:development"
+              "buildTarget": "soninkrala-presentation:build:development"
             }
           },
           "defaultConfiguration": "development"
