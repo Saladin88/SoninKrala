@@ -1,0 +1,47 @@
+:host {
+  display: block;
+  width: 100%;
+  min-height: 100dvh;
+  background-color: var(--color-primary);
+  padding-top: 6rem;
+  box-sizing: border-box;
+}
+
+.quiz-container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 2rem 2rem;
+    margin-top: 4rem;
+    justify-content: space-evenly;
+}
+
+mat-card {
+    min-width: 12rem;
+    max-width: 23rem;
+    min-height: 15rem;
+    transition: transform 0.1s, box-shadow 0.1s;
+}
+
+mat-card:hover {
+    cursor: pointer;
+}
+
+mat-card:active {
+  transform: scale(0.97) translateY(2px);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.10);
+  background-color: #e0e0e0;
+}
+
+@media (max-width: 600px) {
+  mat-card {
+    max-width: 95vw;
+    margin-left: auto;
+    margin-right: auto;
+    box-sizing: border-box;
+  }
+  section {
+    gap: 1rem;
+    padding: 0 0.5rem;
+  }
+}

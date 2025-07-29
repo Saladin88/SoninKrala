@@ -1,0 +1,11 @@
+{
+    "config": {
+        "action": {
+            "closeBtn": "Fermer",
+            "cancelBtn": "Annuler"
+        },
+        "error": {
+            "internalError": "Serveur HS / Erreur Interne. Veuillez essayer de nouveau plus tard"
+        }
+    }
+}

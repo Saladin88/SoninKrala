@@ -1,0 +1,9 @@
+<main class="quiz-container">
+<mat-card *ngFor="let quiz of quizList" appearance="outlined" (click)="getQuestionsByQuizId($event, quiz.quizId)">
+    <mat-card-header>
+        <mat-card-title>{{quiz.quizName}}</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>{{quiz.description}}</mat-card-content>
+
+</mat-card>
+</main>
