@@ -1,7 +1,7 @@
 import { Component, OnDestroy, inject, signal } from '@angular/core';
 import { AccountService } from '../service/account.service';
 import { Subscription} from 'rxjs';
-import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AccountCreationBody } from '../models/account-creation-body';
 import { CustomValidators } from '../../Validators/whiteSpace.validators';
 import { AccountResponseBody } from '../models/account-response-body';
@@ -13,7 +13,10 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { DialogRef } from '@angular/cdk/dialog';
-
+import { ApiFieldError, ImmediateErrorStateMatcher } from '../../Validators/errorStateMatcher';
+import configVariable from '../../../config/account-config.json'
+import commonConfigVariable from '../../../config/common-config.json'
+import { ToasterService } from '../../toaster-service/toaster.service';
 
 @Component({
   selector: 'app-account-creation-view',
@@ -23,16 +26,37 @@ import { DialogRef } from '@angular/cdk/dialog';
 
 })
 export class AccountCreationViewComponent implements OnDestroy {
+  errorMatcher = new ImmediateErrorStateMatcher();
 
+  title: string =  configVariable.config.title.register;
+  username: string = configVariable.config.label.username;
+  password: string = configVariable.config.label.password;
+  firstname: string = configVariable.config.label.firstname;
+  lastname: string = configVariable.config.label.lastname;
+  email: string = configVariable.config.label.email;
+  hintUsername: string = configVariable.config.hint.username;
+  hintPassword: string = configVariable.config.hint.password;
+  hintFirstname: string = configVariable.config.hint.firstname;
+  hintLastname: string = configVariable.config.hint.lastname;
+  spaceErrorText: string = configVariable.config.error.space;
+  requiredErrorText: string = configVariable.config.error.required;
+  minLengthErrorText: string = configVariable.config.error.minLengthPassword;
+  emailErrorText: string = configVariable.config.error.email;
+  uniqueUsernameErrorText: string = configVariable.config.error.uniqueUsername;
+  uniqueEmailErrorText: string = configVariable.config.error.uniqueEmail;
+  registerBtnText: string = configVariable.config.action.createAccount;
+  cancelBtnText: string = commonConfigVariable.config.action.cancelBtn;
+
+
+  invalidCredentials: boolean = false;
   hidePassword = signal<Boolean>(true);
   private readonly subscriptions: Subscription[] = [];
-  private readonly formBuilder = inject(FormBuilder);
-  private readonly dialog = inject(DialogRef)
   isUserAlreadyExists : boolean = false;
 
-  errorMessageMail! : string;
-  errorMessageUsername! : string;
+  private readonly toasterService = inject(ToasterService);
+  private readonly formBuilder = inject(FormBuilder);
 
+  private readonly dialog = inject(DialogRef)
 
   constructor(readonly accountService : AccountService, readonly router : Router){}
 
@@ -41,8 +65,25 @@ export class AccountCreationViewComponent implements OnDestroy {
     lastname : ['', [Validators.required, Validators.maxLength(80),CustomValidators.WhiteSpaceValidator]],
     username : ['', [Validators.required, Validators.maxLength(20),CustomValidators.WhiteSpaceValidator]],
     email : ['', [Validators.required, Validators.maxLength(100), Validators.email,CustomValidators.WhiteSpaceValidator]],
-    password : ['', [Validators.required, Validators.maxLength(20),CustomValidators.WhiteSpaceValidator]],
+    password : ['', [Validators.required,Validators.minLength(8), Validators.maxLength(20)]],
   })
+
+
+  get firstnameControl() : FormControl {
+    return this.accountCreationFormGroup.get('firstname') as FormControl
+  }
+  get lastnameControl() : FormControl {
+    return this.accountCreationFormGroup.get('lastname') as FormControl
+  }
+  get usernameControl() : FormControl {
+    return this.accountCreationFormGroup.get('username') as FormControl
+  }
+  get emailControl() : FormControl {
+    return this.accountCreationFormGroup.get('email') as FormControl
+  }
+  get passwordControl() : FormControl {
+    return this.accountCreationFormGroup.get('password') as FormControl
+  }
 
 
   toggleVisibilityPassword(event : MouseEvent) {
@@ -71,26 +112,58 @@ export class AccountCreationViewComponent implements OnDestroy {
       const formSub = this.accountService.createAccount(this.getFormRawValues()).subscribe({
         next : (createdAccount : AccountResponseBody) => {
           console.log(createdAccount);
-          window.alert("Veuillez vérifier votre boite mail, un lien de confirmation vous a été envoyé")
           this.resetForm();
           this.closeDialog();
+          this.sucessToaster();
           this.router.navigate(['/sign-in'])
         },
         error : (err) => {
-          console.error(err)
-          // if(err.error.fieldErrors) {
-          //   this.isUserAlreadyExists = true;
-          //   this.errorMessageMail = err.error.fieldErrors.email?.[0] ?? '';
-          //   this.errorMessageUsername= err.error.fieldErrors.username?.[0] ?? '';
-            // console.log(err.error.fieldErrors)
-            window.alert("Le nom d'utilisateur et/ou l'adresse mail existent déjà")
-          // }
+          const fieldErrors = err?.error?.fieldErrors;
+          if (fieldErrors) {
+            Object.entries(fieldErrors).forEach(([fieldName, errors]) => {
+              const control = this.accountCreationFormGroup.get(fieldName);
+              if (control && Array.isArray(errors)) {
+                errors.forEach((errorCode) => {
+                  ApiFieldError.apply(control, errorCode);
+                });
+              }
+            });
+          }
+
         }
       })
       this.subscriptions.push(formSub);
     }
   }
-
+  sucessToaster() {
+    this.toasterService.message = configVariable.config.register.sucessToasterMessage;
+    this.toasterService.duration= 3;
+    this.toasterService.successToaster()
+  }
+  errorToaster() {
+    this.toasterService.message = configVariable.config.login.errorToasterMessage;
+    this.toasterService.duration= 8;
+    this.toasterService.errorToaster()
+  }
+  closeErrorToasterIfDirty() {
+    if(this.usernameControl.dirty || this.passwordControl.dirty) {
+      this.toasterService.closeErrorToaster();
+    }
+  }
+  setupFormListener() {
+    const usernameSub = this.usernameControl.valueChanges.subscribe(()=> {
+      this.closeErrorToasterIfDirty();
+      this.invalidCredentials = false;
+      ApiFieldError.remove(this.usernameControl, 'uniqueUsername');
+      this.subscriptions.push(usernameSub)
+    });
+    const emailSub = this.emailControl.valueChanges.subscribe(()=> {
+      this.closeErrorToasterIfDirty();
+      this.invalidCredentials = false;
+      ApiFieldError.remove(this.emailControl, 'UniqueEmail');
+      this.subscriptions.push(emailSub)
+    })
+  }
   resetForm() {
     this.accountCreationFormGroup.reset({
       firstname: '',

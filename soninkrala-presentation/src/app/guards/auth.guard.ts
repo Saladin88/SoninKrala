@@ -29,17 +29,16 @@ export const roleGuard : CanActivateFn = (route, state) => {
   const role = localStorage.getItem('role')
   const rolesAllowed : string[]=  route.data?.['roles'];
 
+  if (!rolesAllowed || !Array.isArray(rolesAllowed)) {
+    console.warn('Aucun rôle défini dans la route');
+    router.navigate(['/unauthorize']);
+    return false;
+    }
 
-    if (!rolesAllowed || !Array.isArray(rolesAllowed)) {
-        console.warn('Aucun rôle défini dans la route');
-        router.navigate(['/unauthorize']);
-        return false;
-      }
-
-      if (!rolesAllowed.includes(role || '')) {
-        router.navigate(['/unauthorize']);
-        return false;
-      }
+    if (!rolesAllowed.includes(role || '')) {
+    router.navigate(['/unauthorize']);
+    return false;
+     }
 
   return true
 

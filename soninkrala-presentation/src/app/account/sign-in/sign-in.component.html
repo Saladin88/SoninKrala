@@ -11,7 +11,6 @@
   <mat-error *ngIf="usernameControl.hasError('required')">
     {{requiredErrorText}}
   </mat-error>
-  <mat-error *ngIf="invalidCredentials">fff</mat-error>
     </mat-form-field>
     <mat-form-field appearance="outline">
       <mat-label>{{password}}</mat-label>
@@ -27,9 +26,8 @@
         {{minLengthErrorText}}
       </mat-error>
     </mat-form-field>
-    <mat-error *ngIf="invalidCredentials">{{credentialsErrorText}}</mat-error>
     <div class="button-action-container">
-      <button mat-flat-button type="submit" [disabled]="this.loginFormGroup.invalid || this.loginFormGroup.errors || this.loginFormGroup.errors?.['required']">
+      <button mat-flat-button type="submit" [disabled]="this.loginFormGroup.invalid || this.loginFormGroup.errors || this.loginFormGroup.errors?.['required'] || invalidCredentials">
         {{loginBtnText}}
       </button>
       <button mat-flat-button type="button" (click)="openDialog($event)">

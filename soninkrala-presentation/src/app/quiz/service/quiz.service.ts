@@ -1,7 +1,7 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable, signal } from '@angular/core';
 import { Observable } from 'rxjs';
-import { ListQuestion } from '../models/list-question';
+import { Quiz } from '../models/list-question';
 import { AnswersChoices, CorrectAnswer, UserAnswer } from '../models/answers';
 import { environment } from '../../../environments/environment';
 import { Question } from '../models/question';
@@ -16,11 +16,16 @@ export class QuizService {
   private quizEndPointUri = environment.backBaseUrl;
   private questions = signal<Question[]>([]);
   private answers = signal<AnswersChoices[]>([]);
+  private quiz = signal<Quiz[]>([]);
 
-  getAllQuestionsData() : Observable<ListQuestion> {
-    const url : string = this.quizEndPointUri + "/quiz";
-    return this.httpClient.get<ListQuestion>(url);
+  getAllQuestionsGivenQuizId(quizId : number) : Observable<Question[]> {
+    const url : string = this.quizEndPointUri + `/quiz/${quizId}/questions`;
+    return this.httpClient.get<Question[]>(url);
   }
+  getAllQuiz() : Observable<Quiz[]> {
+    const url : string = this.quizEndPointUri + "/quiz"
+    return this.httpClient.get<Quiz[]>(url);
+  } 
 
   postUserAnswer(body : AnswersChoices, id : number) {
     const url : string = this.quizEndPointUri + `/quiz/${id}/correct-answer`;
@@ -45,6 +50,13 @@ get answerList() {
 
 setAnswersList(answers : AnswersChoices[]) {
   return this.answers.set(answers)
+}
+
+get QuizList() {
+  return this.quiz;
+}
+setQuizList(quizList : Quiz[]) {
+  return this.quiz.set(quizList)
 }
 
 }

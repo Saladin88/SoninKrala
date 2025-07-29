@@ -1,33 +1,37 @@
-<section>
-  <div *ngIf="questions.length > 0 && currentQuestionIndex === -1 ">
-        <button mat-raised-button (click)="quizStart()" id="startQuiz">Commencer le quiz</button>
-  </div>
-
-
-  <div class="container card-style " *ngIf="currentQuestion">
-    <div class="spinner-container">
-      <mat-progress-spinner mode="determinate" [value]="(currentQuestionIndex + 1) / questions.length * 100" strokeWidth="6" diameter="60"></mat-progress-spinner>
-      <h3>Question {{ currentQuestionIndex + 1 }} / {{ questions.length }}</h3>
+<section  class="quiz-wrapper">
+  <div class="quiz-inner">
+    
+    <div *ngIf="questions.length > 0 && currentQuestionIndex === -1 ">
+      <button mat-raised-button (click)="quizStart()" id="startQuiz">Commencer le quiz</button>
     </div>
-    <p class="question-text">{{ currentQuestion.question }}</p>
-
-    <div class="answer-grid">
-      <div *ngFor="let answer of answersProp"
-           class="answer-block"
-           [class.selected]="selectedAnswer === answer.answer"
-           [class.correct]="isCorrectAnswer(answer)"
-           [class.wrong]="isWrongAnswer(answer)"
-           (click)="selectAnswer(answer)">
-        {{ answer.answer }}
+  
+  
+    <div class="container card-style " *ngIf="currentQuestion">
+      <div class="spinner-container">
+        <mat-progress-spinner mode="determinate" [value]="(currentQuestionIndex + 1) / questions.length * 100" strokeWidth="6" diameter="60"></mat-progress-spinner>
+        <h3>Question {{ currentQuestionIndex + 1 }} / {{ questions.length }}</h3>
       </div>
-
-    </div>
-    <div class="button-action-container">
-      <button mat-raised-button color="primary"
-      [disabled]="!selectedAnswer || isAnswerBlocked"
-      (click)="getCorrectAnswer($event, convertToUserAnswer(currentQuestion.id!, selectedAnswer!))">Valider</button>
-
-      <button *ngIf="isAnswerBlocked" mat-raised-button (click)="nextQuestion($event)">Suivant</button>
+      <p class="question-text">{{ currentQuestion.question }}</p>
+      <img *ngIf="currentQuestion?.photoUrl" [src]="currentQuestion.photoUrl" [alt]="currentQuestion.photoName" class="fit-picture">
+  
+      <div class="answer-grid">
+        <div *ngFor="let answer of answersProp"
+             class="answer-block"
+             [class.selected]="selectedAnswer === answer.answer"
+             [class.correct]="isCorrectAnswer(answer)"
+             [class.wrong]="isWrongAnswer(answer)"
+             (click)="selectAnswer(answer)">
+          {{ answer.answer }}
+        </div>
+  
+      </div>
+      <div class="button-action-container">
+        <button mat-raised-button color="primary"
+        [disabled]="!selectedAnswer || isAnswerBlocked"
+        (click)="getCorrectAnswer($event, convertToUserAnswer(currentQuestion.id!, selectedAnswer!))">Valider</button>
+  
+        <button *ngIf="isAnswerBlocked" mat-raised-button (click)="nextQuestion($event)">Suivant</button>
+      </div>
     </div>
   </div>
 </section>

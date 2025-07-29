@@ -8,6 +8,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
+import java.util.Set;
 
 @Repository
 public interface QuestionJpaRepo extends JpaRepository<QuestionEntity, Integer> {
@@ -18,4 +19,7 @@ public interface QuestionJpaRepo extends JpaRepository<QuestionEntity, Integer> 
 
 //    @Query("select new co.simplon.soninkrala.dtos.CorrectAnswer(a.answer) from AnswerEntity a where a.idQuestion.id = :id and a.correctAnswer = true")//JPQL
 //    CorrectAnswer findCorrectAnswerWithIdQuestion(@Param("id") Integer id);
+
+    @Query(value = "select t_questions.* from t_questions join t_questions_t_quiz on t_questions.id = t_questions_t_quiz.id_question where t_questions_t_quiz.id_quiz = :questionId", nativeQuery = true)
+    Set<QuestionEntity> findAllQUestionsGivenQuizId(@Param("questionId") int questionId);
 }

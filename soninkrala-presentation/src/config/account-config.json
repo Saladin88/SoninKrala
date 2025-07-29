@@ -1,6 +1,7 @@
 {
     "config": {
         "register": {
+            "sucessToasterMessage": "Compte Créer avec succès. Veuillez vérifier votre boite mail, un lien de confirmation vous a été envoyé"
         },
         "login":{
             "sucessToasterMessage" : "Connection réussie",
@@ -8,7 +9,10 @@
         },
         "label": {
             "username": "Nom d'utilisateur",
-            "password": "Mot de passe"
+            "password": "Mot de passe",
+            "email": "Adresse mail",
+            "lastname": "Nom de famille",
+            "firstname": "Prénom"
         },
         "title": {
             "login": "Se connecter",
@@ -17,17 +21,23 @@
         },
         "hint": {
             "username": "Min 1 max 20 caractères",
-            "password": "Min 8 max 20 caractères"
+            "password": "Min 8 max 20 caractères",
+            "firstname": "Maximum 50 caractères",
+            "lastname": "Maximum 80 caractères"
         },
         "error": {
             "space": "Les espaces seuls ne sont pas autorisés",
             "required": "Ce champ est requis",
             "badCredentials": "mauvaises informations d'identification",
-            "minLengthPassword": "Le mot de passe doit contenir min 8 caractères"
+            "minLengthPassword": "Le mot de passe doit contenir min 8 caractères",
+            "email": "L'adresse mail fourni est incorrecte",
+            "uniqueEmail": "Le compte avec cette adresse mail existe déjà",
+            "uniqueUsername": "Le compte avec ce nom d'utilisateur existe déjà"
         },
         "action": {
             "login": "Se connecter",
-            "register": "Créer un compte"
+            "register": "Créer un compte",
+            "createAccount" : "S'inscrire"
         }
     }
 }

@@ -1,7 +1,7 @@
   <mat-toolbar role="heading">
-    <button mat-icon-button >
+ <!--   <button mat-icon-button >
       <mat-icon>menu</mat-icon>
-    </button>
+    </button>-->
     <a [routerLink]="['/home']" class="logo-home-redirection"><span>Soninkrala</span></a>
     <span class="test-spacer"></span>
     <div class="container-header-button" *ngIf="isLoggedIn()">
@@ -11,8 +11,8 @@
       <a mat-icon-button class="display-icon" [routerLink]="['/alphabet']" routerLinkActive="router-link-active" [routerLinkActiveOptions]="{ exact: true }" *ngIf="getUserRole() === 'MEMBER'">
         Alphabet
       </a>
-      <a mat-icon-button class="display-icon">
-        Community
+      <a mat-icon-button class="display-icon" [routerLink]="['/voice-recorder']" routerLinkActive="router-link-active" [routerLinkActiveOptions]="{ exact: true }" *ngIf="getUserRole() === 'MEMBER'">
+        Recordings
       </a>
       <a mat-icon-button class="display-icon">
         Resources

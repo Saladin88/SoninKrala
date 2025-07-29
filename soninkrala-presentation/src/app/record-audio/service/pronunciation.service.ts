@@ -12,8 +12,9 @@ export class PronunciationService {
   urlBaseBack = environment.backBaseUrl
   constructor(private readonly httpClient : HttpClient) { }
 
-  sendVoicePronunciation(body : BodyPronunciation) : Observable<ResultPronunciation> {
+  sendVoicePronunciation(body : FormData) : Observable<ResultPronunciation> {
     const url = this.urlBaseBack + '/pronunciations';
+    console.log('body = ', body);
     return this.httpClient.post<ResultPronunciation>(url, body);
   }
 }

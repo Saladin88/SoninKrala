@@ -1,6 +1,6 @@
 <section>
   <div class="header-title-container">
-    <h1 mat-dialog-title>Créer un compte</h1>
+    <h1 mat-dialog-title>{{title}}</h1>
     <button mat-icon-button mat-dialog-close="true" id="closeButtonIcon" tabindex="-1">
     <mat-icon>closeButton</mat-icon>
   </button>
@@ -9,50 +9,75 @@
   <mat-dialog-content>
     <form [formGroup]="accountCreationFormGroup" (ngSubmit)="onSubmit()">
       <mat-form-field appearance="outline">
-        <mat-label>Prénom</mat-label>
-        <input matInput placeholder="TOTO"  formControlName="firstname" required="true" type="text" maxlength="50">
-        <mat-error *ngIf="accountCreationFormGroup.controls.firstname.invalid && (accountCreationFormGroup.controls.firstname.dirty || accountCreationFormGroup.controls.firstname.touched)">
-          Le prénom est requis et doit être valide.</mat-error>
+        <mat-label>{{lastname}}</mat-label>
+        <input matInput placeholder="Cissé" formControlName="lastname" required="true" type="text" maxlength="80" [errorStateMatcher]="errorMatcher">
+        <mat-hint>{{hintLastname}}</mat-hint>
+        <mat-error *ngIf="lastnameControl.hasError('required')">
+          {{requiredErrorText}}
+        </mat-error>
+        <mat-error *ngIf="lastnameControl.hasError('noSpaceAllowed')">
+          {{spaceErrorText}}
+        </mat-error>
       </mat-form-field>
       <mat-form-field appearance="outline">
-        <mat-label>Nom</mat-label>
-        <input matInput placeholder="Dupont" formControlName="lastname" required="true" type="text" maxlength="80">
-        <mat-hint>indiquer votre nom</mat-hint>
-        <mat-error *ngIf="accountCreationFormGroup.controls.lastname.invalid && (accountCreationFormGroup.controls.lastname.dirty || accountCreationFormGroup.controls.lastname.touched)">
-          Le nom est requis et doit être valide.</mat-error>
+        <mat-label>{{firstname}}</mat-label>
+        <input matInput placeholder="Maria"  formControlName="firstname" required="true" type="text" maxlength="50" [errorStateMatcher]="errorMatcher" >
+        <mat-hint>{{hintFirstname}}</mat-hint>
+        <mat-error *ngIf="firstnameControl.hasError('required')">
+          {{requiredErrorText}}
+        </mat-error>
+        <mat-error *ngIf="firstnameControl.hasError('noSpaceAllowed')">
+          {{spaceErrorText}}
+        </mat-error>
       </mat-form-field>
       <mat-form-field appearance="outline">
-        <mat-label>Username</mat-label>
-        <input matInput placeholder="TOTO"  formControlName="username" required="true" type="text" maxlength="20">
-        <mat-hint>indiquer votre nom d'utilisateur</mat-hint>
-        <mat-error *ngIf="accountCreationFormGroup.controls.username.invalid && (accountCreationFormGroup.controls.username.dirty || accountCreationFormGroup.controls.username.touched)">
-          Le nom d'utilisateur est requis et doit être valide.</mat-error>
-          <mat-error *ngIf="isUserAlreadyExists && errorMessageUsername">{{this.errorMessageUsername}}</mat-error>
+        <mat-label>{{username}}</mat-label>
+        <input matInput placeholder="Xassounka"  formControlName="username" required="true" type="text" maxlength="20" [errorStateMatcher]="errorMatcher">
+        <mat-hint>{{hintUsername}}</mat-hint>
+        <mat-error *ngIf="usernameControl.hasError('required')">
+          {{requiredErrorText}}
+        </mat-error>
+          <mat-error *ngIf="usernameControl.hasError('noSpaceAllowed')">
+            {{spaceErrorText}}
+          </mat-error>
+          <mat-error *ngIf="usernameControl.hasError('UniqueUsername')">{{ uniqueUsernameErrorText }}</mat-error>
       </mat-form-field>
       <mat-form-field appearance="outline">
-        <mat-label>Email</mat-label>
-        <input matInput placeholder="TOTO"  formControlName="email" required="true" type="email">
+        <mat-label>{{email}}</mat-label>
+        <input matInput placeholder="example@gmail.com"  formControlName="email" required="true" type="email" [errorStateMatcher]="errorMatcher">
         <mat-hint>indiquer votre nom adresse mail</mat-hint>
-        <mat-error *ngIf="accountCreationFormGroup.controls.email.invalid && (accountCreationFormGroup.controls.email.dirty || accountCreationFormGroup.controls.email.touched)">
-          L'adresse mail est requis et doit être valide.</mat-error>
-          <mat-error *ngIf="isUserAlreadyExists && errorMessageMail">{{this.errorMessageMail}}</mat-error>
+        <mat-error *ngIf="emailControl.hasError('required')">
+          {{requiredErrorText}}
+        </mat-error>
+          <mat-error *ngIf="emailControl.hasError('noSpaceAllowed')">
+            {{spaceErrorText}}
+          </mat-error>
+          <mat-error *ngIf="emailControl.hasError('email')">
+            {{emailErrorText}}
+          </mat-error>
+        <mat-error *ngIf="emailControl.hasError('UniqueEmail')">{{ uniqueEmailErrorText }}</mat-error>
+
       </mat-form-field>
       <mat-form-field appearance="outline">
-        <mat-label>Password</mat-label>
-        <input matInput placeholder="AZERTY123" [type]="hidePassword() ? 'password' : 'text'" formControlName="password" required="true" minlength="8" maxlength="20">
-        <mat-hint>Indiquer votre mot de passe (min 8 charactère max 20) </mat-hint>
+        <mat-label>{{password}}</mat-label>
+        <input matInput placeholder="AZERTY123" [type]="hidePassword() ? 'password' : 'text'" formControlName="password" required="true" minlength="8" maxlength="20" [errorStateMatcher]="errorMatcher">
+        <mat-hint>{{hintPassword}}</mat-hint>
         <button mat-icon-button matSuffix (click)="toggleVisibilityPassword($event)">
           <mat-icon>{{hidePassword() ? 'visibility_off' : 'visibility'}}</mat-icon>
         </button>
-        <mat-error *ngIf="accountCreationFormGroup.controls.password.invalid && (accountCreationFormGroup.controls.password.dirty || accountCreationFormGroup.controls.password.touched)">
-          Le mot de passe est requis et doit être valide.</mat-error>
+        <mat-error *ngIf="passwordControl.hasError('required')">
+          {{requiredErrorText}}
+        </mat-error>
+        <mat-error *ngIf="passwordControl.hasError('minlength')">
+          {{minLengthErrorText}}
+        </mat-error>
       </mat-form-field>
       <mat-dialog-actions>
         <button mat-stroked-button mat-dialog-close="true" id="closeButton">
-          Close
+          {{cancelBtnText}}
         </button>
-        <button mat-flat-button type="submit"  id="submitButton" [disabled]="this.accountCreationFormGroup.invalid || this.accountCreationFormGroup.errors || this.accountCreationFormGroup.errors?.['required'] || isUserAlreadyExists">
-          Register
+        <button mat-flat-button type="submit"  id="submitButton" [disabled]="this.accountCreationFormGroup.invalid || this.accountCreationFormGroup.errors || this.accountCreationFormGroup.errors?.['required'] || invalidCredentials">
+          {{registerBtnText}}
         </button>
       </mat-dialog-actions>
     </form>

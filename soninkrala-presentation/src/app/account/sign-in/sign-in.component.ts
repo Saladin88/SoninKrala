@@ -14,7 +14,7 @@ import { MatButtonModule } from '@angular/material/button';
 import {MatDialog, MatDialogModule} from '@angular/material/dialog';
 import { AccountCreationViewComponent } from '../account-creation-view/account-creation-view.component';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
-import { ImmediateErrorStateMatcher } from '../../Validators/errorStateMatcher';
+import { ApiFieldError, ImmediateErrorStateMatcher } from '../../Validators/errorStateMatcher';
 import configVariable from '../../../config/account-config.json'
 import { ToasterService } from '../../toaster-service/toaster.service';
 @Component({
@@ -36,6 +36,8 @@ export class SignInComponent implements OnDestroy {
   registerBtnText: string = configVariable.config.action.register;
   credentialsErrorText: string = configVariable.config.error.badCredentials;
   minLengthErrorText: string = configVariable.config.error.minLengthPassword;
+
+
 
   invalidCredentials: boolean = false;
   errorMatcher = new ImmediateErrorStateMatcher();
@@ -87,6 +89,8 @@ export class SignInComponent implements OnDestroy {
           if(err.status === 401) {
             this.invalidCredentials = true;
             // this.loginFormGroup.markAllAsTouched()
+            this.usernameControl.setErrors({ badCredentials: true });
+            this.passwordControl.setErrors({ badCredentials: true });
             this.setupFormListener()
             this.errorToaster()
             console.error(err)}
@@ -123,11 +127,15 @@ export class SignInComponent implements OnDestroy {
     const usernameSub = this.usernameControl.valueChanges.subscribe(()=> {
       this.closeErrorToasterIfDirty();
       this.invalidCredentials = false;
+      ApiFieldError.remove(this.usernameControl, 'badCredentials');
+      ApiFieldError.remove(this.passwordControl, 'badCredentials');
       this.subscriptions.push(usernameSub)
     });
     const passwordSub = this.passwordControl.valueChanges.subscribe(()=> {
       this.closeErrorToasterIfDirty();
       this.invalidCredentials = false;
+      ApiFieldError.remove(this.usernameControl, 'badCredentials');
+      ApiFieldError.remove(this.passwordControl, 'badCredentials');
       this.subscriptions.push(passwordSub)
     })
   }

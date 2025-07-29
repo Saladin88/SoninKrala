@@ -11,19 +11,20 @@
 @if (recorderStatus === 'inactive') {
     <button (click)="startRecording()">Commencer l'enregistrement audio</button>
   }
-  
+
   @else if (recorderStatus === 'recording' || recorderStatus === 'paused') {
     <button (click)="stopRecording()">L'arrêter</button>
     <button (click)="suspendRecording()">
       {{ recorderStatus === 'paused' ? 'Reprendre' : 'Suspendre (pause)' }}
     </button>
   }
-  
+
   @if (audioUrl) {
-    <form (ngSubmit)="onSubmit($event)">
-        <audio [src]="audioUrl" controls [controlsList]="'nodownload'" [formControl]="audioSubmit"></audio>
-        <button type="submit">Envoyer</button>
-    </form>
+        <audio [src]="audioUrl" controls [controlsList]="'nodownload'"></audio>
+        <button type="submit" (click)="sendRecord($event)">Envoyer</button>
+  }
+  @if(resultPronunciation) {
+    <p>{{resultPronunciation.score}}</p>
+    <p>{{resultPronunciation.audioName}}</p>
   }
 </section>
-  

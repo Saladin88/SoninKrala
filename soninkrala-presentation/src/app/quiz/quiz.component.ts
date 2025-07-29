@@ -1,10 +1,9 @@
-import { Component, OnDestroy, OnInit, ViewChild, ElementRef, effect } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild, ElementRef, effect, inject } from '@angular/core';
 import { QuizService } from './service/quiz.service';
 import { Question } from './models/question';
 import { MatCardModule } from '@angular/material/card';
 import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
-import { ListQuestion } from './models/list-question';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AnswersChoices, CorrectAnswer, UserAnswer } from './models/answers';
 import { Subscription } from 'rxjs';
@@ -26,9 +25,10 @@ correctAnswer! : CorrectAnswer | null;
 selectedAnswer : string | null = null;
 isAnswerBlocked : boolean = false;
 private readonly subscriptions: Subscription[] = [];
+private readonly route = inject(ActivatedRoute);
 
 
-  constructor( readonly quizService: QuizService, private router : Router, private route : ActivatedRoute) {
+  constructor( readonly quizService: QuizService) {
     effect(() => {
       this.questions = this.quizService.questionList();
       this.answersProp = this.quizService.answerList();
@@ -37,9 +37,10 @@ private readonly subscriptions: Subscription[] = [];
   }
 
   fetchQuizData() {
-    this.quizService.getAllQuestionsData().subscribe({
-      next : (datas : ListQuestion) => {
-        this.quizService.setQuestionList(datas.data || []);
+    const quizId : number = this.route.snapshot.params['id'];
+    this.quizService.getAllQuestionsGivenQuizId(quizId).subscribe({
+      next : (datas : Question[]) => {
+        this.quizService.setQuestionList(datas);
       },
       error : err => console.error(err)
     }

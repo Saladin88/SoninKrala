@@ -12,15 +12,15 @@ import java.util.List;
 
 public record QuestionQuiz(
         int id,
-        @NotBlank
-        @Size(max=80)
         String question,
-        LocalDateTime creation_date) {
+        LocalDateTime creation_date,
+        String photoUrl,
+        String photoName) {
 
-
-        private static QuestionQuiz toQuestionDto(QuestionEntity questionEntity, List<AnswerEntity> answerEntities) {
-                return new QuestionQuiz(questionEntity.getId(),questionEntity.getQuestion(), getDateToLocalDateTimeIfExist(questionEntity.getCreationDate()));
-        }
+//
+//        private static QuestionQuiz toQuestionDto(QuestionEntity questionEntity, List<AnswerEntity> answerEntities) {
+//                return new QuestionQuiz(questionEntity.getId(),questionEntity.getQuestion(), getDateToLocalDateTimeIfExist(questionEntity.getCreationDate()));
+//        }
 
         private static LocalDateTime getDateToLocalDateTimeIfExist(OffsetDateTime offsetDateTime) {
                 return offsetDateTime != null ? offsetDateTime.atZoneSameInstant(ZoneId.systemDefault()).toLocalDateTime() : null;

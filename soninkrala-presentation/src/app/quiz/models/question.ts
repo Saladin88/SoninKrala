@@ -4,4 +4,6 @@ export interface Question {
 id : number
 question : string
 creation_date?: Date
+photoUrl? : string
+photoName? : string
 }

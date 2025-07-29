@@ -1,3 +1,12 @@
+:host {
+  display: block;
+  width: 100%;
+  min-height: 100dvh;
+  background-color: var(--color-primary);
+  padding-top: 6rem;
+  box-sizing: border-box;
+}
+
 mat-card {
   margin-bottom: 2rem;
 }
@@ -6,19 +15,24 @@ img {
 }
 mat-card {
   max-width: 400px;
+
 }
 mat-card:hover {
   box-shadow: 0.5rem 0.5rem 1rem 0.5rem var(--color-secondary);
   cursor: pointer;
 }
+
 section {
-  background-color: var(--color-primary);
+  flex-grow: 1;
+  width: 100%;
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
   gap: 2rem;
-  height: 110vh;
+  justify-content: space-around;
+  box-sizing: border-box;
 }
+
 mat-card-content {
   text-align: center;
 }
@@ -26,4 +40,17 @@ mat-card-content {
 mat-card-header,p {
   justify-content: center;
   font-weight: bolder;
+}
+
+@media (max-width: 600px) {
+  mat-card {
+    max-width: 95vw;
+    margin-left: auto;
+    margin-right: auto;
+    box-sizing: border-box;
+  }
+  section {
+    gap: 1rem;
+    padding: 0 0.5rem;
+  }
 }

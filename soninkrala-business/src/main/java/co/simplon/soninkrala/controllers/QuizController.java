@@ -1,7 +1,8 @@
 package co.simplon.soninkrala.controllers;
 
 import co.simplon.soninkrala.dtos.CorrectAnswer;
-import co.simplon.soninkrala.dtos.QuizData;
+import co.simplon.soninkrala.dtos.QuestionQuiz;
+import co.simplon.soninkrala.dtos.QuizDto;
 import co.simplon.soninkrala.dtos.UserAnswerDto;
 import co.simplon.soninkrala.services.QuizService;
 import jakarta.validation.Valid;
@@ -9,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Set;
 
 @RestController
 @RequestMapping("/soninkrala/api/v1/quiz")
@@ -33,9 +35,15 @@ public class QuizController {
         return quizService.getCorrectAnswer(id,userAnswer);
     }
 
-    @GetMapping
+    @GetMapping("/{id}/questions")
     @ResponseStatus(code=HttpStatus.OK)
-    public QuizData getQuestion() {
-        return quizService.getAll();
+    public Set<QuestionQuiz> getQuestionByQuizId(@PathVariable int id) {
+        return quizService.getAllQuestionsForQuizId(id);
+    }
+
+    @GetMapping()
+    @ResponseStatus(HttpStatus.OK)
+    public Set<QuizDto> getAllQuiz() {
+        return this.quizService.getAllQuiz();
     }
 }

@@ -1,5 +1,6 @@
-import { Question } from "./question";
 
-export interface ListQuestion {
-  data?: Question[];
+export interface Quiz {
+  quizId : number
+  quizName : string
+  description : string
 }

@@ -12,14 +12,14 @@ export const routes: Routes = [
     loadComponent: () => import('./home/home.component').then(m=> m.HomeComponent),
   },
   {
-  path: 'quiz',
-  canMatch:[authGuard],
-  canActivate: [roleGuard],
-  data: {roles: ['MEMBER']},
-  loadComponent: () => import('./quiz/quiz.component').then(m=> m.QuizComponent),
-},
+    path: 'quiz',
+    canMatch:[authGuard],
+    canActivate: [roleGuard],
+    data: {roles: ['MEMBER']},
+    loadComponent: () => import('./quiz-list-view/quiz-list-view.component').then(m=> m.QuizListViewComponent),
+  },
 {
-  path: 'quiz/:id',
+  path: 'quiz/:id/questions',
   canMatch:[authGuard],
   canActivate: [roleGuard],
     data: {roles: ['MEMBER']},
@@ -31,6 +31,14 @@ export const routes: Routes = [
   canActivate: [roleGuard],
   data: {roles: ['MEMBER']},
   loadComponent: () => import('./alphabet-audio-view/alphabet-audio-view.component').then(m=> m.AlphabetAudioViewComponent),
+
+},
+{
+  path: 'voice-recorder',
+  canMatch:[authGuard],
+  canActivate: [roleGuard],
+  data: {roles: ['MEMBER']},
+  loadComponent: () => import('./record-audio/record-audio.component').then(m=> m.RecordAudioComponent),
 
 },
 {

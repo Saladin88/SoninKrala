@@ -2,9 +2,11 @@ package co.simplon.soninkrala.mappers;
 
 import co.simplon.soninkrala.dtos.AnswerChoice;
 import co.simplon.soninkrala.dtos.QuestionQuiz;
+import co.simplon.soninkrala.dtos.QuizDto;
 import co.simplon.soninkrala.dtos.UserAnswerDto;
 import co.simplon.soninkrala.entities.AnswerEntity;
 import co.simplon.soninkrala.entities.QuestionEntity;
+import co.simplon.soninkrala.entities.QuizEntity;
 
 import java.util.List;
 
@@ -12,8 +14,8 @@ import static co.simplon.soninkrala.utils.DateHoursUtil.getDateToLocalDateTimeIf
 
 public class QuizMapper {
 
-    public static  List<QuestionQuiz> fromEntitiesToDtoList(List<QuestionEntity> questionEntities) {
-        return questionEntities.stream().map(q -> new QuestionQuiz(q.getId(),q.getQuestion(),getDateToLocalDateTimeIfExist(q.getCreationDate()))).toList();
+    public static  QuestionQuiz toQuestionQuiz(QuestionEntity questionEntity) {
+        return new QuestionQuiz(questionEntity.getId(),questionEntity.getQuestion(),getDateToLocalDateTimeIfExist(questionEntity.getCreationDate()), questionEntity.getPhoto().getUrlPhoto(), questionEntity.getPhoto().getPictureName());
 
     }
     public static AnswerChoice toDtoAnswer(AnswerEntity answerEntity) {
@@ -27,5 +29,9 @@ public class QuizMapper {
     public static UserAnswerDto toAnswerDto(AnswerEntity answerEntity) {
         UserAnswerDto userAnswerDto = new UserAnswerDto(answerEntity.getIdQuestion().getId(), answerEntity.getAnswer());
         return userAnswerDto;
+    }
+
+    public static QuizDto toQuizDto(QuizEntity quizEntity) {
+        return new QuizDto(quizEntity.getId(), quizEntity.getQuizName(), quizEntity.getDescription());
     }
 }

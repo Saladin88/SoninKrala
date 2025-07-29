@@ -3,6 +3,6 @@ export interface BodyPronunciation {
   word : string
 }
 export interface ResultPronunciation {
-  result : number
-  word : string
+  score : number
+  audioName : string
 }
