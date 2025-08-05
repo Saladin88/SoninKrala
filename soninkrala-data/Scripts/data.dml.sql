@@ -2,10 +2,18 @@ INSERT INTO t_roles (name, is_role_default) VALUES
                                              ('MEMBER', true),
                                              ('ADMIN', false);
 
-insert into t_questions (question,creation_date) values
-                                                     ('Quelle est la capitale du Mali ?','2024-09-05'),
-                                                     ('Que veut dire tohou ?', '2024-10-31'),
-                                                     ('Comment dit-on "Comment vas-tu ? "', '2025-02-10');
+insert into t_photos(picture_name,url_photo) VALUES
+                                                  ('mais','https://photos-associeted-to-words.s3.eu-west-3.amazonaws.com/mais.jpg'),
+                                                  ('puit','https://photos-associeted-to-words.s3.eu-west-3.amazonaws.com/puit.jpg'),
+                                                  ('couteau','https://photos-associeted-to-words.s3.eu-west-3.amazonaws.com/couteau.jpeg'),
+                                                  ('poulet','https://photos-associeted-to-words.s3.eu-west-3.amazonaws.com/poulet.jpeg'),
+                                                  ('cheval','https://photos-associeted-to-words.s3.eu-west-3.amazonaws.com/cheval.jpeg'),
+                                                  ('chien','https://photos-associeted-to-words.s3.eu-west-3.amazonaws.com/chien.jpeg');
+
+insert into t_questions (question,creation_date,id_photo) values
+                                                     ('Quelle est la capitale du Mali ?','2024-09-05',1),
+                                                     ('Que veut dire tohou ?', '2024-10-31',2),
+                                                     ('Comment dit-on "Comment vas-tu ? "', '2025-02-10',3);
 
 
 insert into t_answers (answer, is_correct_answer, id_question) values
@@ -30,13 +38,6 @@ insert into t_audios_letters (url_link) values
                                             ('https://audios-alphabet.s3.eu-west-3.amazonaws.com/S-si-un-cheval.mp3'),
                                             ('https://audios-alphabet.s3.eu-west-3.amazonaws.com/W-wule-un-chien.mp3');
 
-insert into t_photos(picture_name,url_photo) VALUES
-                                                  ('mais','https://photos-associeted-to-words.s3.eu-west-3.amazonaws.com/mais.jpg'),
-                                                  ('puit','https://photos-associeted-to-words.s3.eu-west-3.amazonaws.com/puit.jpg'),
-                                                  ('couteau','https://photos-associeted-to-words.s3.eu-west-3.amazonaws.com/couteau.jpeg'),
-                                                  ('poulet','https://photos-associeted-to-words.s3.eu-west-3.amazonaws.com/poulet.jpeg'),
-                                                  ('cheval','https://photos-associeted-to-words.s3.eu-west-3.amazonaws.com/cheval.jpeg'),
-                                                  ('chien','https://photos-associeted-to-words.s3.eu-west-3.amazonaws.com/chien.jpeg');
 
 
 insert into t_letters (letter_name, id_audio_letter,letter_order, id_photo) values
