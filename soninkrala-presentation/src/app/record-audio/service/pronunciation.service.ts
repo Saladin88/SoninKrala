@@ -18,3 +18,4 @@ export class PronunciationService {
     return this.httpClient.post<ResultPronunciation>(url, body);
   }
 }
+

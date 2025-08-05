@@ -48,6 +48,10 @@ export const routes: Routes = [
 {
   path: 'contact',
   loadComponent: () => import('./contact/contact.component').then(m => m.ContactComponent)
+},{
+  path: 'account-profile',
+  loadComponent: () => import('./account/account.component').then(m => m.AccountComponent)
+
 },
 {
   path: 'account-validation',
