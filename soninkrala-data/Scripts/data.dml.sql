@@ -1,4 +1,4 @@
-INSERT INTO t_roles (name, role_default) VALUES
+INSERT INTO t_roles (name, is_role_default) VALUES
                                              ('MEMBER', true),
                                              ('ADMIN', false);
 
