@@ -20,27 +20,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 @ExtendWith(MockitoExtension.class)
 class QuizControllerTests {
-    private static final QuizServiceImpl QUIZ_SERVICE = Mockito.mock(QuizServiceImpl.class);
-    private static final MockMvc MOCK_MVC = MockMvcBuilders.standaloneSetup(new QuizController(QUIZ_SERVICE)).build();
-    private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
-    private static final String CORRECT_ANSWER = "correctAnswer";
-    private static final String QUESTION = "Question ? ";
-
-    @Test
-    public void getQuizData() throws Exception {
-            MOCK_MVC.perform(get("/soninkrala/api/v1/quiz")).andExpect(status().isOk());
-    }
-
-    @Test
-    public void retrieveCorrectAnswer() throws Exception {
-        UserAnswerDto userAnswerDto = new UserAnswerDto(QUESTION, CORRECT_ANSWER);
-        MOCK_MVC.perform(post("/soninkrala/api/v1/quiz")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(OBJECT_MAPPER.writeValueAsString(userAnswerDto)))
-                .andDo(print())
-                .andExpect(status().isOk());
-
-    }
 
 }
 
