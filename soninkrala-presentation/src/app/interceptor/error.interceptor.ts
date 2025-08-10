@@ -20,7 +20,7 @@ export const errorInterceptor: HttpInterceptorFn = (req, next) => {
         case 400:
           return throwError(() => error);
         case 401 :
-          if (req.url.includes('/register')) {
+          if (req.url.includes('/register') || req.url.includes('/sign-in')) {
             break;
           }
         toasterService.message = 'Token expired, vous allez être déconnecter';
