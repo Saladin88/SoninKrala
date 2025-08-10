@@ -13,7 +13,7 @@
     "build:dev": "ng build --configuration=development",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "setEnvVars": "chmodd +x ./setEnv.sh && ./setEnv.sh"
+    "setEnvVars": "chmod +x ./setEnv.sh && ./setEnv.sh"
   },
   "private": true,
   "dependencies": {
