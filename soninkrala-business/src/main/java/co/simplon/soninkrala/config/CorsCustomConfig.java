@@ -7,12 +7,12 @@ import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
-@ConditionalOnProperty(value = "co.simplon.soninkral.cors.enabled", havingValue = "true",
+@ConditionalOnProperty(value = "co.simplon.soninkrala.cors.enabled", havingValue = "true",
 	matchIfMissing = true)
 class CorsCustomConfig implements WebMvcConfigurer {
 
     @Value("${co.simplon.soninkrala.cors}")
-    private String origins;
+    private String[] origins;
 
             @Override
             public void addCorsMappings(CorsRegistry registry) {
