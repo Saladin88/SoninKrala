@@ -26,9 +26,6 @@ import javax.crypto.spec.SecretKeySpec;
 @Configuration
 public class SecurityConfig {
 
-    @Value("${co.simplon.soninkrala.cors}")
-    private String origins;
-
     @Value("${co.simplon.soninkrala.cost}")
     private Integer cost; //nombre d'itération
 
@@ -40,16 +37,6 @@ public class SecurityConfig {
 
     @Value("${co.simplon.soninkrala.issuer}")
     private String issuer;
-    @Bean
-    public WebMvcConfigurer corsConfigurer() {
-        return new WebMvcConfigurer() {
-
-            @Override
-            public void addCorsMappings(CorsRegistry registry) {
-                registry.addMapping("/**").allowedMethods("GET","POST").allowedOrigins(origins);
-            }
-        };
-    }
 
     @Bean
     JwtProvider jwtProvider() {
@@ -78,7 +65,7 @@ public class SecurityConfig {
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .csrf((csrf) -> csrf.disable())  // Désactive la protection CSRF (pas nécessaire avec JWT)
-                .cors(Customizer.withDefaults())
+                .cors(corsCustomizer())
                 .authorizeHttpRequests((authorize) -> authorize
                         .requestMatchers(HttpMethod.POST,"/soninkrala/api/v1/accounts","/soninkrala/api/v1/accounts/log-in").anonymous())
                 .authorizeHttpRequests((auth) -> auth
@@ -94,5 +81,10 @@ public class SecurityConfig {
         // Relies on JWT
         // authorize some requests or not
         // ???
+    }
+
+    private Customizer<CorsConfigurer<HttpSecurity>> corsCustomizer() {
+	return corsEnabled ? Customizer.withDefaults()
+		: cors -> cors.disable();
     }
 }
