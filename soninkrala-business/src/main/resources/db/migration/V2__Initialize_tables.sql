@@ -1,13 +1,43 @@
 BEGIN;
 
-DROP TABLE IF EXISTS t_questions, t_answers, t_accounts, t_roles, t_audios_letters, t_letters, t_photos CASCADE ;
+DROP TABLE IF EXISTS t_questions, t_answers, t_accounts, t_roles, t_audios_letters, t_letters, t_photos, t_quiz, t_questions_t_quiz CASCADE ;
+
+CREATE TABLE t_photos (
+                          id int GENERATED ALWAYS AS IDENTITY,
+                          picture_name varchar(120) NOT NULL,
+                          url_photo varchar(200) NOT NULL,
+                          CONSTRAINT t_photos_pkey PRIMARY KEY (id),
+                          CONSTRAINT t_photos_ukey UNIQUE (picture_name,url_photo)
+);
+
+CREATE TABLE t_quiz (
+                        id INT GENERATED ALWAYS AS IDENTITY,
+                        quiz_name VARCHAR(90) NOT NULL,
+                        description TEXT NOT NULL,
+                        CONSTRAINT t_quiz_pkey PRIMARY KEY (id),
+                        CONSTRAINT t_quiz_name_ukey UNIQUE (quiz_name)
+
+);
 
 CREATE TABLE t_questions (
                              id INT GENERATED ALWAYS AS IDENTITY,
                              question VARCHAR(80) NOT NULL,
                              creation_date DATE,
-                             CONSTRAINT t_questions_pkey PRIMARY KEY (id)
+                             id_photo INT NOT NULL,
+                             CONSTRAINT t_questions_pkey PRIMARY KEY (id),
+                             CONSTRAINT t_questions_t_quiz_ukey UNIQUE (question),
+                             CONSTRAINT t_questions_t_photos_fkey FOREIGN KEY (id_photo)
+                                REFERENCES  t_photos(id)
+);
 
+CREATE TABLE t_questions_t_quiz (
+                            id_quiz INT,
+                            id_question INT,
+                            CONSTRAINT t_questions_t_quiz_pkey PRIMARY KEY (id_quiz, id_question),
+                            CONSTRAINT t_questions_t_quiz_fkey FOREIGN KEY (id_quiz)
+                                REFERENCES t_quiz(id),
+                            CONSTRAINT t_questions_t_question_fkey FOREIGN KEY (id_question)
+                                REFERENCES t_questions(id)
 );
 
 CREATE TABLE t_answers (
@@ -35,7 +65,7 @@ CREATE TABLE t_accounts (
                             lastname varchar(80) NOT NULL,
                             email varchar(100) NOT NULL,
                             username varchar(20) NOT NULL,
-                            password varchar(20) NOT NULL,
+                            password varchar(80) NOT NULL,
                             is_verify BOOLEAN NOT NULL,
                             creation_date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
                             uuid_token UUID,
@@ -58,14 +88,6 @@ CREATE TABLE t_audios_letters (
 
 );
 
-CREATE TABLE t_photos (
-                          id int GENERATED ALWAYS AS IDENTITY,
-                          picture_name varchar(120) NOT NULL,
-                          url_photo varchar(200) NOT NULL,
-                          CONSTRAINT t_photos_pkey PRIMARY KEY (id),
-                          CONSTRAINT t_photos_ukey UNIQUE (picture_name,url_photo)
-);
-
 
 CREATE TABLE t_letters (
                            id int GENERATED ALWAYS AS IDENTITY,
@@ -83,15 +105,35 @@ CREATE TABLE t_letters (
 );
 
 
-INSERT INTO t_roles (name, role_default) VALUES
+INSERT INTO t_roles (name, is_role_default) VALUES
                                              ('MEMBER', true),
                                              ('ADMIN', false);
 
-insert into t_questions (question,creation_date) values
-                                                     ('Quelle est la capitale du Mali ?','2024-09-05'),
-                                                     ('Que veut dire tohou ?', '2024-10-31'),
-                                                     ('Comment dit-on "Comment vas-tu ? "', '2025-02-10');
+INSERT INTO t_quiz (quiz_name, description) VALUES
+                                                ('Culture générales sur le Mali', 'Ce quiz permet de connaitre plus de fun fact sur le pays qui est le Mali'),
+                                                ('Comprendre l''alphabet en soninke', 'Ce quiz va vous permettre de savoir si vous avez correctement mémoriser les lettres de l''alphabet soninke');
 
+
+insert into t_photos(picture_name,url_photo) VALUES
+                                                 ('mais','https://photos-associeted-to-words.s3.eu-west-3.amazonaws.com/mais.jpg'),
+                                                 ('puit','https://photos-associeted-to-words.s3.eu-west-3.amazonaws.com/puit.jpg'),
+                                                 ('couteau','https://photos-associeted-to-words.s3.eu-west-3.amazonaws.com/couteau.jpeg'),
+                                                 ('poulet','https://photos-associeted-to-words.s3.eu-west-3.amazonaws.com/poulet.jpeg'),
+                                                 ('cheval','https://photos-associeted-to-words.s3.eu-west-3.amazonaws.com/cheval.jpeg'),
+                                                 ('chien','https://photos-associeted-to-words.s3.eu-west-3.amazonaws.com/chien.jpeg');
+
+
+insert into t_questions (question,creation_date,id_photo) values
+                                                     ('Quelle est la capitale du Mali ?','2024-09-05',2),
+                                                     ('Que veut dire tohou ?', '2024-10-31',3),
+                                                     ('Comment dit-on "Comment vas-tu ? "', '2025-02-10',5);
+
+
+insert into t_questions_t_quiz (id_quiz, id_question) VALUES
+                                                          (1,2),
+                                                          (2,3),
+                                                          (1,3),
+                                                          (1,1);
 
 insert into t_answers (answer, is_correct_answer, id_question) values
                                                                    ('Bamako', true, 1),
@@ -115,15 +157,6 @@ insert into t_audios_letters (url_link) values
                                             ('https://audios-alphabet.s3.eu-west-3.amazonaws.com/S-si-un-cheval.mp3'),
                                             ('https://audios-alphabet.s3.eu-west-3.amazonaws.com/W-wule-un-chien.mp3');
 
-insert into t_photos(picture_name,url_photo) VALUES
-                                                  ('mais','https://photos-associeted-to-words.s3.eu-west-3.amazonaws.com/mais.jpg'),
-                                                  ('puit','https://photos-associeted-to-words.s3.eu-west-3.amazonaws.com/puit.jpg'),
-                                                  ('couteau','https://photos-associeted-to-words.s3.eu-west-3.amazonaws.com/couteau.jpeg'),
-                                                  ('poulet','https://photos-associeted-to-words.s3.eu-west-3.amazonaws.com/poulet.jpeg'),
-                                                  ('cheval','https://photos-associeted-to-words.s3.eu-west-3.amazonaws.com/cheval.jpeg'),
-                                                  ('chien','https://photos-associeted-to-words.s3.eu-west-3.amazonaws.com/chien.jpeg');
-
-
 insert into t_letters (letter_name, id_audio_letter,letter_order, id_photo) values
                                                          ('A',1,1,1),
                                                          ('G', 2,7,2),
@@ -131,4 +164,6 @@ insert into t_letters (letter_name, id_audio_letter,letter_order, id_photo) valu
                                                          ('Ŋ',4,16,4),
                                                          ('S',5,21,5),
                                                          ('W',6,24,6);
+
+
 END;

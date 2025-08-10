@@ -14,9 +14,14 @@ import { Tile } from './models/tile-grid';
 })
 export class AccountComponent implements OnDestroy {
 
+  generalInfo! : string[];
   private readonly subscriptions: Subscription[] = [];
   private readonly formBuilder = inject(FormBuilder)
 
+
+  userProfileGeneralInfo = this.formBuilder.group({
+
+  })
   constructor(readonly accountService : AccountService){}
 
   tiles: Tile[] = [
@@ -28,6 +33,13 @@ export class AccountComponent implements OnDestroy {
 
   ngOnDestroy(): void {
     this.subscriptions.forEach(sub => sub.unsubscribe());
+  }
+  patchFormValues() {
+    if(this.generalInfo) {
+      const g = this.userProfileGeneralInfo.patchValue({
+        
+      })
+    }
   }
 
 }

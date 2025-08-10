@@ -1,3 +1,3 @@
 export const environment= {
-backBaseUrl: "BACKBASEURL"
+backBaseUrl: "BACK_BASE_URL"
 }

@@ -4,9 +4,16 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build soninkrala-presentation --configuration production",
+    "start:staging": "ng serve --configuration=staging",
+    "start:prod": "ng serve --configuration=production",
+    "start:dev": "ng serve --configuration=development",
+    "build": "ng build",
+    "build:staging": "ng build --configuration=staging",
+    "build:prod": "ng build --configuration=production",
+    "build:dev": "ng build --configuration=development",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test"
+    "test": "ng test",
+    "setEnvVars": "chmodd +x ./setEnv.sh && ./setEnv.sh"
   },
   "private": true,
   "dependencies": {

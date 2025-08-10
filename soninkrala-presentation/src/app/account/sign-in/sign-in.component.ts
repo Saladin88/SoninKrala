@@ -17,6 +17,7 @@ import {MatSnackBarModule} from '@angular/material/snack-bar';
 import { ApiFieldError, ImmediateErrorStateMatcher } from '../../Validators/errorStateMatcher';
 import configVariable from '../../../config/account-config.json'
 import { ToasterService } from '../../toaster-service/toaster.service';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-sign-in',
   imports: [CommonModule,MatFormFieldModule, MatInputModule,MatIconModule, MatButtonModule, ReactiveFormsModule,MatDialogModule, MatSnackBarModule],
@@ -46,6 +47,7 @@ export class SignInComponent implements OnDestroy {
   private readonly formBuilder = inject(FormBuilder)
   private readonly dialog = inject(MatDialog);
   private readonly toasterService = inject(ToasterService)
+  private readonly router = inject(Router);
 
   loginFormGroup = this.formBuilder.group({
     username : ['', [Validators.required, Validators.maxLength(20),CustomValidators.WhiteSpaceValidator]],
@@ -84,6 +86,7 @@ export class SignInComponent implements OnDestroy {
           this.resetForm();
           this.authService.storeResponseLogin(response.token, response.role)
           this.sucessToaster()
+          this.router.navigate(['account-profile'])
         },
         error : (err) => {
           if(err.status === 401) {

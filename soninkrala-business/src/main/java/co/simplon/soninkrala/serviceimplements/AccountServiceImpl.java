@@ -3,10 +3,7 @@ package co.simplon.soninkrala.serviceimplements;
 import co.simplon.soninkrala.components.EmailSender;
 import co.simplon.soninkrala.config.JwtProvider;
 import co.simplon.soninkrala.controllers.errors.BadCredentialErrorMessage;
-import co.simplon.soninkrala.dtos.AccountCreationRequestBody;
-import co.simplon.soninkrala.dtos.AccountCreationResponse;
-import co.simplon.soninkrala.dtos.AccountLogInRequestBody;
-import co.simplon.soninkrala.dtos.AccountLogInResponse;
+import co.simplon.soninkrala.dtos.*;
 import co.simplon.soninkrala.entities.AccountEntity;
 import co.simplon.soninkrala.entities.RoleEntity;
 import co.simplon.soninkrala.jpaRepositories.AccountJpaRepo;
@@ -88,6 +85,11 @@ public class AccountServiceImpl implements AccountService {
         optionalAccount.get().setUuidTokenExpiration(null);
         accountJpaRepo.save(optionalAccount.get());
         response.sendRedirect(redirectionUrlFront+"?validation=valid");
+    }
+
+    @Override
+    public MemberGeneralInfo getMemberGeneralInfo(String username) {
+        return null;
     }
 
     private void sendValidationEmail(String email, String username, String token) {
