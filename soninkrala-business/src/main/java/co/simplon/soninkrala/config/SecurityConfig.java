@@ -38,6 +38,9 @@ public class SecurityConfig {
     @Value("${co.simplon.soninkrala.issuer}")
     private String issuer;
 
+	@Value("${co.simplon.soninkrala.cors.enabled}")
+    private boolean corsEnabled;
+
     @Bean
     JwtProvider jwtProvider() {
         Algorithm algorithm = Algorithm.HMAC256(secret);
