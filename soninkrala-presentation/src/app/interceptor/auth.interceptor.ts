@@ -3,7 +3,7 @@ import { inject } from '@angular/core';
 import { AuthService } from '../account/auth-service/auth.service';
 
 export const authInterceptor: HttpInterceptorFn = (req, next) => {
-  if(req.url.includes('/sign-in') || req.url.include('/register')) {
+  if(req.url.includes('/sign-in') || req.url.includes('/register')) {
     return next(req);
   }
   const auth = inject(AuthService) //pour injecter le service AuthService dans l'intercepteur et obtenir le token d'authentification.
