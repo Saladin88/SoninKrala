@@ -71,12 +71,11 @@ public class SecurityConfig {
                 .csrf((csrf) -> csrf.disable())  // Désactive la protection CSRF (pas nécessaire avec JWT)
                 .cors(corsCustomizer())
                 .authorizeHttpRequests((authorize) -> authorize
-                        .requestMatchers(HttpMethod.POST,"/api/v1/accounts","/soninkrala/api/v1/accounts/log-in").anonymous())
-                .authorizeHttpRequests((auth) -> auth
+                        .requestMatchers(HttpMethod.POST,"/soninkrala/api/v1/accounts","/soninkrala/api/v1/accounts/log-in").anonymous()
                         .requestMatchers(HttpMethod.GET,"/soninkrala/api/v1/quiz", "/soninkrala/api/v1/quiz/{id}/answers","/soninkrala/api/v1/quiz/{id}/questions","/soninkrala/api/v1/alphabet").hasRole("MEMBER")
                         .requestMatchers(HttpMethod.POST,"/soninkrala/api/v1/quiz","/soninkrala/api/v1/quiz/{id}/correct-answer","/soninkrala/api/v1/pronunciations").hasRole("MEMBER")
-                        .requestMatchers(HttpMethod.GET, "/soninkrala/api/v1/accounts/verify").permitAll())
-                .authorizeHttpRequests((auth) -> auth.anyRequest().authenticated())
+                        .requestMatchers(HttpMethod.GET, "/soninkrala/api/v1/accounts/verify").permitAll()
+                        .anyRequest().authenticated())
                 .oauth2ResourceServer((srv) -> srv.jwt(Customizer.withDefaults())  // Configurer le JwtDecoder pour valider les JWT
                 );
 
