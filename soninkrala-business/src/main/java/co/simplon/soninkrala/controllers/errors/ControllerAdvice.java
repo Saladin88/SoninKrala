@@ -2,6 +2,7 @@ package co.simplon.soninkrala.controllers.errors;
 
 import co.simplon.soninkrala.dtos.validators.CustomErrorResponse;
 import jakarta.validation.ConstraintViolationException;
+import jakarta.validation.constraints.Email;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
@@ -69,6 +70,11 @@ public class ControllerAdvice extends ResponseEntityExceptionHandler {
     protected ResponseEntity<Object> handleBadCredentialsException(BadCredentialsException e) {
         return new ResponseEntity<>(e.getMessage(), HttpStatus.UNAUTHORIZED);
     };
+
+    @ExceptionHandler(EmailNotVerifiedException.class)
+    protected ResponseEntity<Object> handleUnverifiedAccount(EmailNotVerifiedException e) {
+        return new ResponseEntity<>(e.getMessage(), HttpStatus.FORBIDDEN);
+    }
 
     @ExceptionHandler(QuizErrorMessage.class)
     protected ResponseEntity<Object> handleQuizErrorHandler(QuizErrorMessage error) {

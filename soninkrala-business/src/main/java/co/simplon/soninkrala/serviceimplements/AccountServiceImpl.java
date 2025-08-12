@@ -3,6 +3,7 @@ package co.simplon.soninkrala.serviceimplements;
 import co.simplon.soninkrala.components.EmailSender;
 import co.simplon.soninkrala.config.JwtProvider;
 import co.simplon.soninkrala.controllers.errors.BadCredentialErrorMessage;
+import co.simplon.soninkrala.controllers.errors.EmailNotVerifiedException;
 import co.simplon.soninkrala.dtos.*;
 import co.simplon.soninkrala.entities.AccountEntity;
 import co.simplon.soninkrala.entities.RoleEntity;
@@ -119,6 +120,9 @@ public class AccountServiceImpl implements AccountService {
         AccountEntity accountEntity = accountJpaRepo.findByUsernameIgnoreCase(inputs.username())
                                                 .orElseThrow(()-> new BadCredentialErrorMessage("No existing account with : " + inputs.username()));
 
+        if(!accountEntity.isVerify()){
+            throw new EmailNotVerifiedException("Email not verify");
+        }
         boolean isPasswordMatch = passwordEncoder.matches(inputs.password(), accountEntity.getPassword());
         if (!isPasswordMatch) {
             throw new BadCredentialErrorMessage("Bad credentials for user : " + inputs.username());
