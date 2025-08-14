@@ -1,9 +1,11 @@
 import { Component, OnDestroy, inject } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
+import { FormBuilder, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { AccountService } from './service/account.service';
 import {MatGridListModule} from '@angular/material/grid-list';
 import { Tile } from './models/tile-grid';
+import { CustomValidators } from '../Validators/whiteSpace.validators';
+import { ProfileGeneralInfoUpdateRequest } from './models/account-patch-body';
 
 
 @Component({
@@ -20,7 +22,9 @@ export class AccountComponent implements OnDestroy {
 
 
   userProfileGeneralInfo = this.formBuilder.group({
-
+    firstname : ['', [Validators.maxLength(50),CustomValidators.WhiteSpaceValidator]],
+    lastname : ['', [Validators.maxLength(80),CustomValidators.WhiteSpaceValidator]],
+    username : ['', [Validators.maxLength(20),CustomValidators.WhiteSpaceValidator]]
   })
   constructor(readonly accountService : AccountService){}
 
@@ -40,6 +44,14 @@ export class AccountComponent implements OnDestroy {
         
       })
     }
+  }
+  getFormRawValues() : ProfileGeneralInfoUpdateRequest {
+    const formControlValues : ProfileGeneralInfoUpdateRequest = {
+      firstname: this.userProfileGeneralInfo.controls.firstname.value ?? '', // si value  null ou undefined alors return droite
+      lastname: this.userProfileGeneralInfo.controls.lastname.value ?? '',
+      username: this.userProfileGeneralInfo.controls.username.value ?? ''
+    }
+    return formControlValues;
   }
 
 }

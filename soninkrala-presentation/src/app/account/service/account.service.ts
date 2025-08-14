@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { AccountCreationBody, LoginRequestBody } from '../models/account-creation-body';
 import { AccountResponseBody, LoginResponseBody } from '../models/account-response-body';
+import { ProfileGeneralInfoUpdateRequest, UpdateProfileGeneralInfoResponse } from '../models/account-patch-body';
 
 @Injectable({
   providedIn: 'root'
@@ -21,6 +22,11 @@ export class AccountService {
   login(body : LoginRequestBody) : Observable<LoginResponseBody> {
     const url = this.accountEndPointUri + "/accounts/log-in";
     return this.httpClient.post<LoginResponseBody>(url, body);
+  }
+
+  updateAccountInfo(body : ProfileGeneralInfoUpdateRequest) : Observable<UpdateProfileGeneralInfoResponse> {
+    const url = this.accountEndPointUri + "/member-profile-info";
+    return this.httpClient.patch<UpdateProfileGeneralInfoResponse>(url,body)
   }
 
 }
