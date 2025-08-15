@@ -2,19 +2,31 @@ INSERT INTO t_roles (name, is_role_default) VALUES
                                              ('MEMBER', true),
                                              ('ADMIN', false);
 
+INSERT INTO t_quiz (quiz_name, description) VALUES
+                                                ('Culture générales sur le Mali', 'Ce quiz permet de connaitre plus de fun fact sur le pays qui est le Mali'),
+                                                ('Comprendre l''alphabet en soninke', 'Ce quiz va vous permettre de savoir si vous avez correctement mémoriser les lettres de l''alphabet soninke');
+
+
 insert into t_photos(picture_name,url_photo) VALUES
-                                                  ('mais','https://photos-associeted-to-words.s3.eu-west-3.amazonaws.com/mais.jpg'),
-                                                  ('puit','https://photos-associeted-to-words.s3.eu-west-3.amazonaws.com/puit.jpg'),
-                                                  ('couteau','https://photos-associeted-to-words.s3.eu-west-3.amazonaws.com/couteau.jpeg'),
-                                                  ('poulet','https://photos-associeted-to-words.s3.eu-west-3.amazonaws.com/poulet.jpeg'),
-                                                  ('cheval','https://photos-associeted-to-words.s3.eu-west-3.amazonaws.com/cheval.jpeg'),
-                                                  ('chien','https://photos-associeted-to-words.s3.eu-west-3.amazonaws.com/chien.jpeg');
+                                                 ('mais','https://photos-associeted-to-words.s3.eu-west-3.amazonaws.com/mais.jpg'),
+                                                 ('puit','https://photos-associeted-to-words.s3.eu-west-3.amazonaws.com/puit.jpg'),
+                                                 ('couteau','https://photos-associeted-to-words.s3.eu-west-3.amazonaws.com/couteau.jpeg'),
+                                                 ('poulet','https://photos-associeted-to-words.s3.eu-west-3.amazonaws.com/poulet.jpeg'),
+                                                 ('cheval','https://photos-associeted-to-words.s3.eu-west-3.amazonaws.com/cheval.jpeg'),
+                                                 ('chien','https://photos-associeted-to-words.s3.eu-west-3.amazonaws.com/chien.jpeg');
+
 
 insert into t_questions (question,creation_date,id_photo) values
-                                                     ('Quelle est la capitale du Mali ?','2024-09-05',1),
-                                                     ('Que veut dire tohou ?', '2024-10-31',2),
-                                                     ('Comment dit-on "Comment vas-tu ? "', '2025-02-10',3);
+                                                     ('Quelle est la capitale du Mali ?','2024-09-05',2),
+                                                     ('Que veut dire tohou ?', '2024-10-31',3),
+                                                     ('Comment dit-on "Comment vas-tu ? "', '2025-02-10',5);
 
+
+insert into t_questions_t_quiz (id_quiz, id_question) VALUES
+                                                          (1,2),
+                                                          (2,3),
+                                                          (1,3),
+                                                          (1,1);
 
 insert into t_answers (answer, is_correct_answer, id_question) values
                                                                    ('Bamako', true, 1),
@@ -37,8 +49,6 @@ insert into t_audios_letters (url_link) values
                                             ('https://audios-alphabet.s3.eu-west-3.amazonaws.com/Nje-selinje-un-poulet.mp3'),
                                             ('https://audios-alphabet.s3.eu-west-3.amazonaws.com/S-si-un-cheval.mp3'),
                                             ('https://audios-alphabet.s3.eu-west-3.amazonaws.com/W-wule-un-chien.mp3');
-
-
 
 insert into t_letters (letter_name, id_audio_letter,letter_order, id_photo) values
                                                          ('A',1,1,1),
