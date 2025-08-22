@@ -64,6 +64,7 @@ CREATE TABLE t_accounts (
                             email varchar(100) NOT NULL,
                             username varchar(20) NOT NULL,
                             password varchar(80) NOT NULL,
+                            profile_image varchar(200),
                             is_verify BOOLEAN NOT NULL,
                             creation_date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
                             uuid_token UUID,
