@@ -57,3 +57,6 @@ insert into t_letters (letter_name, id_audio_letter,letter_order, id_photo) valu
                                                          ('Ŋ',4,16,4),
                                                          ('S',5,21,5),
                                                          ('W',6,24,6);
+
+insert into t_term_versions(version,published_at,label_version) values
+                                                          ('1.0.0','2025-09-01','Terms and Conditions v1.0.0 – Initial Project Release [SONINKRALA]');
