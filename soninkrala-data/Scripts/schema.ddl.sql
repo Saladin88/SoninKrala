@@ -3,7 +3,7 @@ DROP TABLE IF EXISTS t_questions, t_answers, t_accounts, t_roles, t_audios_lette
 CREATE TABLE t_pronunciation_attempts (
                         id INT GENERATED ALWAYS AS IDENTITY,
                         pronunciation_word VARCHAR(50),
-                        attempted_at DATETIME,
+                        attempted_at TIMESTAMPTZ,
                         similarity_score DECIMAL(5,2) NOT NULL,
                         CONSTRAINT t_pronunciation_attempts_pkey PRIMARY KEY(id),
                         CONSTRAINT t_pronunciation_attempts_ukey UNIQUE (pronunciation_word,attempted_at)
@@ -70,7 +70,7 @@ CREATE TABLE t_roles (
 CREATE TABLE t_term_versions (
                           id int GENERATED ALWAYS AS IDENTITY,
                           version VARCHAR(20) NOT NULL,
-                          published_at DATETIME NOT NULL,
+                          published_at TIMESTAMPTZ NOT NULL,
                           label_version VARCHAR(100),
                           CONSTRAINT t_term_versions_pkey PRIMARY KEY(id),
                           CONSTRAINT t_term_versions_ukey UNIQUE (version)
@@ -85,7 +85,7 @@ CREATE TABLE t_accounts (
                             password varchar(80) NOT NULL,
                             profile_image varchar(200),
                             is_verify BOOLEAN NOT NULL,
-                            rgpd_accepted_at DATETIME NOT NULL,
+                            rgpd_accepted_at TIMESTAMPTZ NOT NULL,
                             creation_date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
                             uuid_token UUID,
                             uuid_token_expiration TIMESTAMP,
@@ -101,24 +101,22 @@ CREATE TABLE t_accounts (
 );
 
 CREATE TABLE t_accounts_t_quiz_attempts (
-                           id_account INT,
-                           id_quiz INT,
+                           id INT GENERATED ALWAYS AS IDENTITY,
+                           id_account INT NOT NULL,
+                           id_quiz INT NOT NULL,
                            score INT NOT NULL,
                            attempt_number INT,
-                           completed_at DATETIME NOT NULL,
-                           CONSTRAINT t_accounts_t_quiz_attempts_pkey PRIMARY KEY(id_account, id_quiz),
+                           completed_at TIMESTAMPTZ NOT NULL,
+                           CONSTRAINT t_accounts_t_quiz_attempts_pkey PRIMARY KEY(id),
                            CONSTRAINT t_accounts_t_quiz_attempts_ukey UNIQUE(id_account, id_quiz,completed_at),
                            CONSTRAINT t_accounts_t_quiz_attempts_t_accounts_fkey FOREIGN KEY(id_account) REFERENCES t_accounts(id),
-                           CONSTRAINT t_accounts_t_quiz_attempts_t_quiz_attempts_fkey FOREIGN KEY(id_quiz) REFERENCES t_quiz_attempts(id)
+                           CONSTRAINT t_accounts_t_quiz_attempts_t_quiz_fkey FOREIGN KEY(id_quiz) REFERENCES t_quiz(id)
 );
 
 CREATE TABLE t_accounts_t_pronunciation_attempts (
                         id_account INT,
                         id_pronunciation INT,
-                        attempted_at DATETIME,
-                        similarity_score DECIMAL(5,2) NOT NULL,
                         CONSTRAINT t_accounts_t_pronunciation_attempts_pkey PRIMARY KEY(id_account,id_pronunciation),
-                        CONSTRAINT t_accounts_t_pronunciation_attempts_ukey UNIQUE(id_account, id_pronunciation,attempted_at),
                         CONSTRAINT t_accounts_t_quiz_attempts_t_accounts_fkey FOREIGN KEY(id_account) REFERENCES t_accounts(id),
                         CONSTRAINT t_accounts_t_quiz_attempts_t_pronunciation_attempts_fkey FOREIGN KEY(id_pronunciation) REFERENCES t_pronunciation_attempts(id)
 );
