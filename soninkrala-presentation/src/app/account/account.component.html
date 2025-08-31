@@ -1,9 +1,83 @@
-<mat-grid-list cols="4" rowHeight="20rem">
-    @for (tile of tiles; track tile) {
-      <mat-grid-tile
-        [colspan]="tile.cols"
-        [rowspan]="tile.rows"
-        [style.background]="tile.color">{{tile.text}}</mat-grid-tile>
-    }
-  </mat-grid-list>
+<main>
+  @if (generalInfo(); as profilInfo) {
+    <mat-grid-list cols="5" rowHeight="15rem">
+      @for (tile of tiles; track tile.type) {
+        <mat-grid-tile [colspan]="tile.cols" [rowspan]="tile.rows" [style.background]="tile.color">
   
+          @switch (tile.type) {
+  
+            @case ('quiz') {
+              @if ((profilInfo.quizAttemptsList.length) > 0) {
+                @for (quiz of profilInfo.quizAttemptsList.slice(0,2); track quiz.quizId) {
+                  <div>Quiz #{{ quiz.quizId }} — {{ quiz.quizName }} — Score: {{ quiz.score }}%</div>
+                }
+              } @else {
+                <div>Aucun quiz pour l’instant.</div>
+              }
+            }
+  
+            @case ('pronunciation') {
+              @if ((profilInfo.pronunciationResults.length) > 0) {
+                @for (p of profilInfo.pronunciationResults.slice(0,2); track p.id) {
+                  <div>Mot : {{ p.audioName }} — Score: {{ p.score }}%</div>
+                }
+              } @else {
+                <div>Aucune prononciation pour l’instant.</div>
+              }
+            }
+  
+            @case ('account') {
+              @if (!isUpdateButtoClicked) {
+                <mat-card appearance="outlined">
+                  <mat-card-header>
+                    <mat-card-title>{{tile.title}}</mat-card-title>
+                  </mat-card-header>
+                  <div class="avatar-image-container"><img [src]="profilInfo.profilePictureUrl" alt="avatar"></div>
+                    <mat-card-content class="center-container-card-content">
+                      <p class="bold">{{ profilInfo.lastname }} {{ profilInfo.firstname }}</p>
+                      <p>{{ profilInfo.username }}</p>
+                      <p>{{ profilInfo.email }}</p>
+                      <p>{{ profilInfo.role }}</p>
+                    </mat-card-content>
+                </mat-card>
+              } @else {
+                <mat-card appearance="outlined">
+                  <mat-card-header>
+                    <mat-card-title>{{tile.title}}</mat-card-title>
+                  </mat-card-header>
+                  <div class="avatar-image-container"><img [src]="profilInfo.profilePictureUrl" alt="avatar"></div>
+                  <form [formGroup]="userProfileGeneralInfo" (ngSubmit)="onSubmit()">
+                    <mat-card-content>
+                      <mat-form-field class="form-field-full-width">
+                      <mat-label>{{lastname}}</mat-label>
+                      <input matInput formControlName="lastname" type="text" maxlength="80">
+                    </mat-form-field>
+                    <mat-form-field class="form-field-full-width" >
+                      <mat-label>{{firstname}}</mat-label>
+                      <input matInput formControlName="firstname" type="text" maxlength="50" >
+                    </mat-form-field>
+                    <mat-form-field class="form-field-full-width" >
+                      <mat-label>{{username}}</mat-label>
+                      <input matInput formControlName="username" type="text" maxlength="20" >
+                    </mat-form-field>
+                    </mat-card-content>
+                    <div class="button-action-container">
+                      <button mat-stroked-button id="closeButton" (click)="isUpdateButtoClicked = false">
+                        {{cancelBtnText}}
+                      </button>
+                      <button mat-flat-button type="submit" [disabled]="this.userProfileGeneralInfo.invalid || this.userProfileGeneralInfo.errors">
+                        {{modificationBtnText}}
+                      </button>
+                    </div>
+                  </form>
+                </mat-card>
+              }
+
+            }
+  
+          } <!-- /switch -->
+        </mat-grid-tile>
+      } <!-- /for -->
+    </mat-grid-list>
+  } <!-- /if -->
+</main>

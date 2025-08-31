@@ -17,10 +17,11 @@ import { ApiFieldError, ImmediateErrorStateMatcher } from '../../Validators/erro
 import configVariable from '../../../config/account-config.json'
 import commonConfigVariable from '../../../config/common-config.json'
 import { ToasterService } from '../../toaster-service/toaster.service';
+import {MatCheckboxModule} from '@angular/material/checkbox';
 
 @Component({
   selector: 'app-account-creation-view',
-  imports: [MatInputModule, MatFormFieldModule, ReactiveFormsModule, MatIconModule, MatButtonModule, MatDialogModule, CommonModule],
+  imports: [MatInputModule, MatFormFieldModule, ReactiveFormsModule, MatIconModule, MatButtonModule, MatDialogModule, CommonModule,MatCheckboxModule],
   templateUrl: './account-creation-view.component.html',
   styleUrl: './account-creation-view.component.css',
 
@@ -66,6 +67,7 @@ export class AccountCreationViewComponent implements OnDestroy {
     username : ['', [Validators.required, Validators.maxLength(20),CustomValidators.WhiteSpaceValidator]],
     email : ['', [Validators.required, Validators.maxLength(100), Validators.email,CustomValidators.WhiteSpaceValidator]],
     password : ['', [Validators.required,Validators.minLength(8), Validators.maxLength(20)]],
+    isTermsAccepted : [false, [Validators.requiredTrue]]
   })
 
 
@@ -84,6 +86,9 @@ export class AccountCreationViewComponent implements OnDestroy {
   get passwordControl() : FormControl {
     return this.accountCreationFormGroup.get('password') as FormControl
   }
+  get isTermsAccepted() : FormControl {
+    return this.accountCreationFormGroup.get('isTermsAccepted') as FormControl
+  }
 
 
   toggleVisibilityPassword(event : MouseEvent) {
@@ -99,7 +104,9 @@ export class AccountCreationViewComponent implements OnDestroy {
       lastname: this.accountCreationFormGroup.controls.lastname.value ?? '',
       username: this.accountCreationFormGroup.controls.username.value ?? '',
       email: this.accountCreationFormGroup.controls.email.value ?? '',
-      password: this.accountCreationFormGroup.controls.password.value ?? ''
+      password: this.accountCreationFormGroup.controls.password.value ?? '',
+      isRgpdAgreed: this.accountCreationFormGroup.controls.isTermsAccepted.value ?? false
+
     }
     return formControlValues;
   }

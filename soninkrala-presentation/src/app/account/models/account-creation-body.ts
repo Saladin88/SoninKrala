@@ -4,6 +4,7 @@ export interface AccountCreationBody {
   username : string
   email : string
   password : string
+  isRgpdAgreed : boolean
 
 }
 

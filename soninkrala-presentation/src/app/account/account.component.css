@@ -1,0 +1,58 @@
+img {
+    border-radius: 50%;
+    width: 10rem;
+}
+.avatar-image-container {
+    text-align: center;
+    margin: 2rem;
+}
+.center-container-card-content {
+    text-align: center;
+}
+
+.bold {
+    font-weight: bold;
+}
+.italic {
+    font-weight: lighter;
+}
+
+mat-card {
+    width: 80%;  
+    height: 80%;  
+    min-height: 20rem; 
+    padding: 2rem;
+}
+
+.form-field-full-width {
+    width: 100%;
+}
+
+#closeButtonIcon {
+    text-align: center;
+    margin-right: 1rem;
+  }
+
+  #submitButton {  /* selecteur d'attribut */
+    background-color: var(--color-accent);
+    color: var(--color-text);
+  }
+  #submitButton:disabled {
+    background-color: grey;
+  
+  }
+.button-action-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    gap: 1rem;
+  }
+  
+.button-action-container button[mat-flat-button] {  /* selecteur d'attribut */
+    background-color: var(--color-accent);
+    color: var(--color-text);
+  }
+  
+.button-action-container button[mat-flat-button]:disabled {
+    background-color: grey;
+  }

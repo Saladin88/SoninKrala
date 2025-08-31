@@ -7,6 +7,10 @@
             "sucessToasterMessage" : "Connection réussie",
             "errorToasterMessage" : "Mauvais identifiants"
         },
+        "modify": {
+            "sucessToasterMessage": "Le profile a correctement été modifié",
+            "errorToasterMessage" : "Une erreur est survenue"
+        },
         "label": {
             "username": "Nom d'utilisateur",
             "password": "Mot de passe",
@@ -37,7 +41,8 @@
         "action": {
             "login": "Se connecter",
             "register": "Créer un compte",
-            "createAccount" : "S'inscrire"
+            "createAccount" : "S'inscrire",
+            "modify" : "Modifier"
         }
     }
 }
