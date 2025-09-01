@@ -1,14 +1,13 @@
-DROP TABLE IF EXISTS t_questions, t_answers, t_accounts, t_roles, t_audios_letters, t_letters, t_photos, t_quiz, t_questions_t_quiz,t_pronunciation_attempts,t_term_versions,t_accounts_t_quiz_attempts CASCADE ;
+DROP TABLE IF EXISTS t_questions,t_words, t_account_pronunciation_attempts, t_answers, t_accounts, t_roles, t_audios_letters, t_letters, t_photos, t_quiz, t_questions_t_quiz,t_pronunciation_attempts,t_term_versions,t_accounts_t_quiz_attempts CASCADE ;
 
-CREATE TABLE t_pronunciation_attempts (
-                        id INT GENERATED ALWAYS AS IDENTITY,
-                        pronunciation_word VARCHAR(50),
-                        attempted_at TIMESTAMPTZ,
-                        similarity_score DECIMAL(5,2) NOT NULL,
-                        CONSTRAINT t_pronunciation_attempts_pkey PRIMARY KEY(id),
-                        CONSTRAINT t_pronunciation_attempts_ukey UNIQUE (pronunciation_word,attempted_at)
+
+CREATE TABLE t_words (
+                         id INT GENERATED ALWAYS AS IDENTITY,
+                         language_code VARCHAR(20) NOT NULL,
+                         word_label VARCHAR(50) NOT NULL,
+                         CONSTRAINT t_words_pkey PRIMARY KEY(id),
+                         CONSTRAINT t_words_ukey UNIQUE (language_code, word_label)
 );
-
 
 CREATE TABLE t_photos (
                           id INT GENERATED ALWAYS AS IDENTITY,
@@ -35,17 +34,17 @@ CREATE TABLE t_questions (
                              CONSTRAINT t_questions_pkey PRIMARY KEY (id),
                              CONSTRAINT t_questions_t_quiz_ukey UNIQUE (question),
                              CONSTRAINT t_questions_t_photos_fkey FOREIGN KEY (id_photo)
-                                REFERENCES  t_photos(id)
+                                 REFERENCES  t_photos(id)
 );
 
 CREATE TABLE t_questions_t_quiz (
-                            id_quiz INT,
-                            id_question INT,
-                            CONSTRAINT t_questions_t_quiz_pkey PRIMARY KEY (id_quiz, id_question),
-                            CONSTRAINT t_questions_t_quiz_fkey FOREIGN KEY (id_quiz)
-                                REFERENCES t_quiz(id),
-                            CONSTRAINT t_questions_t_question_fkey FOREIGN KEY (id_question)
-                                REFERENCES t_questions(id)
+                                    id_quiz INT,
+                                    id_question INT,
+                                    CONSTRAINT t_questions_t_quiz_pkey PRIMARY KEY (id_quiz, id_question),
+                                    CONSTRAINT t_questions_t_quiz_fkey FOREIGN KEY (id_quiz)
+                                        REFERENCES t_quiz(id),
+                                    CONSTRAINT t_questions_t_question_fkey FOREIGN KEY (id_question)
+                                        REFERENCES t_questions(id)
 );
 
 CREATE TABLE t_answers (
@@ -68,12 +67,12 @@ CREATE TABLE t_roles (
 );
 
 CREATE TABLE t_term_versions (
-                          id int GENERATED ALWAYS AS IDENTITY,
-                          version VARCHAR(20) NOT NULL,
-                          published_at TIMESTAMPTZ NOT NULL,
-                          label_version VARCHAR(100),
-                          CONSTRAINT t_term_versions_pkey PRIMARY KEY(id),
-                          CONSTRAINT t_term_versions_ukey UNIQUE (version)
+                                 id int GENERATED ALWAYS AS IDENTITY,
+                                 version VARCHAR(20) NOT NULL,
+                                 published_at TIMESTAMPTZ NOT NULL,
+                                 label_version VARCHAR(100),
+                                 CONSTRAINT t_term_versions_pkey PRIMARY KEY(id),
+                                 CONSTRAINT t_term_versions_ukey UNIQUE (version)
 );
 
 CREATE TABLE t_accounts (
@@ -90,7 +89,7 @@ CREATE TABLE t_accounts (
                             uuid_token UUID,
                             uuid_token_expiration TIMESTAMP,
                             id_role INT NOT NULL,
-                            id_rgpd_version NOT NULL,
+                            id_rgpd_version INT NOT NULL,
                             CONSTRAINT t_accounts_pkey PRIMARY KEY (id),
                             CONSTRAINT t_accounts_email_ukey UNIQUE (email),
                             CONSTRAINT t_accounts_username_ukey UNIQUE (username),
@@ -99,35 +98,39 @@ CREATE TABLE t_accounts (
                             CONSTRAINT t_accounts_t_term_versions_fkey FOREIGN KEY (id_rgpd_version)
                                 REFERENCES t_term_versions (id)
 );
+CREATE TABLE t_account_pronunciation_attempts (
+                                                  id INT GENERATED ALWAYS AS IDENTITY,
+                                                  attempted_at TIMESTAMPTZ,
+                                                  account_id INT NOT NULL,
+                                                  word_id INT NOT NULL,
+                                                  similarity_score DECIMAL(5,2) NOT NULL,
+                                                  CONSTRAINT t_pronunciation_attempts_pkey PRIMARY KEY(id),
+                                                  CONSTRAINT t_pronunciation_attempts_ukey UNIQUE (account_id, word_id,attempted_at),
+                                                  CONSTRAINT t_pronunciation_attempts_t_accounts_fkey FOREIGN KEY (account_id) REFERENCES t_accounts(id),
+                                                  CONSTRAINT t_pronunciation_attempts_t_words_fkey FOREIGN KEY (word_id) REFERENCES t_words(id)
 
-CREATE TABLE t_accounts_t_quiz_attempts (
-                           id INT GENERATED ALWAYS AS IDENTITY,
-                           id_account INT NOT NULL,
-                           id_quiz INT NOT NULL,
-                           score INT NOT NULL,
-                           attempt_number INT,
-                           completed_at TIMESTAMPTZ NOT NULL,
-                           CONSTRAINT t_accounts_t_quiz_attempts_pkey PRIMARY KEY(id),
-                           CONSTRAINT t_accounts_t_quiz_attempts_ukey UNIQUE(id_account, id_quiz,completed_at),
-                           CONSTRAINT t_accounts_t_quiz_attempts_t_accounts_fkey FOREIGN KEY(id_account) REFERENCES t_accounts(id),
-                           CONSTRAINT t_accounts_t_quiz_attempts_t_quiz_fkey FOREIGN KEY(id_quiz) REFERENCES t_quiz(id)
 );
 
-CREATE TABLE t_accounts_t_pronunciation_attempts (
-                        id_account INT,
-                        id_pronunciation INT,
-                        CONSTRAINT t_accounts_t_pronunciation_attempts_pkey PRIMARY KEY(id_account,id_pronunciation),
-                        CONSTRAINT t_accounts_t_quiz_attempts_t_accounts_fkey FOREIGN KEY(id_account) REFERENCES t_accounts(id),
-                        CONSTRAINT t_accounts_t_quiz_attempts_t_pronunciation_attempts_fkey FOREIGN KEY(id_pronunciation) REFERENCES t_pronunciation_attempts(id)
+CREATE TABLE t_accounts_t_quiz_attempts (
+                                            id INT GENERATED ALWAYS AS IDENTITY,
+                                            id_account INT NOT NULL,
+                                            id_quiz INT NOT NULL,
+                                            score INT NOT NULL,
+                                            attempt_number INT,
+                                            completed_at TIMESTAMPTZ NOT NULL,
+                                            CONSTRAINT t_accounts_t_quiz_attempts_pkey PRIMARY KEY(id),
+                                            CONSTRAINT t_accounts_t_quiz_attempts_ukey UNIQUE(id_account, id_quiz,completed_at),
+                                            CONSTRAINT t_accounts_t_quiz_attempts_t_accounts_fkey FOREIGN KEY(id_account) REFERENCES t_accounts(id),
+                                            CONSTRAINT t_accounts_t_quiz_attempts_t_quiz_fkey FOREIGN KEY(id_quiz) REFERENCES t_quiz(id)
 );
 
 
 CREATE TABLE t_audios_letters (
 
-                            id int GENERATED ALWAYS AS IDENTITY,
-                            url_link varchar(200) NOT NULL,
-                            CONSTRAINT t_audios_letters_pkey PRIMARY KEY (id),
-                            CONSTRAINT t_audios_letters_ukey UNIQUE (url_link)
+                                  id int GENERATED ALWAYS AS IDENTITY,
+                                  url_link varchar(200) NOT NULL,
+                                  CONSTRAINT t_audios_letters_pkey PRIMARY KEY (id),
+                                  CONSTRAINT t_audios_letters_ukey UNIQUE (url_link)
 
 );
 
