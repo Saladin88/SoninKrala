@@ -25,6 +25,8 @@ import reactor.core.publisher.Mono;
 
 import java.security.Principal;
 
+import static software.amazon.awssdk.http.auth.aws.internal.signer.V4RequestSigner.header;
+
 @Service
 @Transactional(readOnly = true)
 public class VoiceRecorderServiceImpl implements VoiceRecorderService {
@@ -32,6 +34,9 @@ public class VoiceRecorderServiceImpl implements VoiceRecorderService {
     private final AccountPronunciationJpaRepo accountPronunciationJpaRepo;
     @Value("${co.simplon.soninkrala.uri.python-api.pronunciation}")
     private String uriPythonApiPronunciation;
+
+    @Value("${co.simplon.soninkrala.secret_shared_key_api}")
+    private String flaskSharedSecret;
 
     private final WebClient webClient;
     private final AccountJpaRepo accountJpaRepo;
@@ -55,6 +60,7 @@ public class VoiceRecorderServiceImpl implements VoiceRecorderService {
         return webClient.post()
                 .uri(uriPythonApiPronunciation)
                 .contentType(MediaType.MULTIPART_FORM_DATA)
+                .header("Api-Key", flaskSharedSecret)
                 .body(BodyInserters.fromMultipartData(parts))
                 .retrieve()
                 .onStatus(

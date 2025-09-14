@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify,abort
 from resemblyzer import VoiceEncoder, preprocess_wav
 from pathlib import Path
 from itertools import groupby
@@ -10,6 +10,7 @@ import os,tempfile
 
 app = Flask(__name__)
 encoder = VoiceEncoder()
+API_KEY = os.getenv("FLASK_SHARED_SECRET", "")
 ALLOWED_EXT = {"webm", "m4a", "wav", "mp3"}
 MIME_TO_FMT = {
     "audio/webm": "webm",
@@ -20,9 +21,13 @@ MIME_TO_FMT = {
     "audio/x-wav": "wav",
     "audio/mpeg": "mp3",
 }
+def require_api_key():
+    if API_KEY and request.headers.get("Api-Key") != API_KEY:
+        abort(403)
 
 @app.route('/compare-pronunciation', methods=['POST'])
 def compare_pronunciation():
+    require_api_key()
     audio_file = request.files.get('audioFile')
     audio_file_name = request.form.get('audioFileName', 'nom-inconnu')
 
