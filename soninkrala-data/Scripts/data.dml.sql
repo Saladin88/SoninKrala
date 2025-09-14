@@ -15,6 +15,11 @@ insert into t_photos(picture_name,url_photo) VALUES
                                                  ('cheval','https://photos-associeted-to-words.s3.eu-west-3.amazonaws.com/cheval.jpeg'),
                                                  ('chien','https://photos-associeted-to-words.s3.eu-west-3.amazonaws.com/chien.jpeg');
 
+insert into t_words(language_code,word_label) VALUES
+                                                  ('snk','samake'),
+                                                  ('fr','serpent'),
+                                                  ('snk','makka'),
+                                                  ('fr','maîs');
 
 insert into t_questions (question,creation_date,id_photo) values
                                                      ('Quelle est la capitale du Mali ?','2024-09-05',2),
