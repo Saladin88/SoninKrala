@@ -1,0 +1,12 @@
+{
+    "config": {
+        "action": {
+            "closeBtn": "Fermer",
+            "cancelBtn": "Annuler"
+        },
+        "label": {
+            "acceptTermsAndRgpd": "J'accepte les Conditions Générales d'Utilisation (CGU) et la politique de confidentialité (RGPD) de Soninkrala",
+            "version": "Version "
+        }
+    }
+}

@@ -1,0 +1,15 @@
+{ 
+    "config": {
+        "hint": {
+            "recordInstruction": "Veuillez appuyer sur le micro pour commencer l'enregistrement"
+        },
+        "creation": {
+            "actions": {
+                "send": "Envoyer"
+            }
+        },
+        "label": {
+            "score" : "Score"
+        }
+    }
+}
