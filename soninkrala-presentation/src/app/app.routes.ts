@@ -12,6 +12,10 @@ export const routes: Routes = [
     loadComponent: () => import('./home/home.component').then(m=> m.HomeComponent),
   },
   {
+    path:'cgu-et-confidentialite',
+    loadComponent:() => import('./term-agrement-view-component/term-agrement-view-component.component').then(m=>m.TermAgrementViewComponentComponent)
+  },
+  {
     path: 'quiz',
     canMatch:[authGuard],
     canActivate: [roleGuard],
@@ -26,6 +30,14 @@ export const routes: Routes = [
   loadComponent: () => import('./quiz/quiz.component').then(m=> m.QuizComponent),
 },
 {
+  path: 'prononciation/:word/mot',
+  // canMatch:[authGuard],
+  // canActivate: [roleGuard],
+  // data: {roles: ['MEMBER']},
+  loadComponent: () => import('./record-audio/record-audio.component').then(m=> m.RecordAudioComponent),
+
+},
+{
   path: 'alphabet',
   canMatch:[authGuard],
   canActivate: [roleGuard],
@@ -33,13 +45,13 @@ export const routes: Routes = [
   loadComponent: () => import('./alphabet-audio-view/alphabet-audio-view.component').then(m=> m.AlphabetAudioViewComponent),
 
 },
+
 {
-  path: 'voice-recorder',
+  path: 'prononciations',
   canMatch:[authGuard],
   canActivate: [roleGuard],
-  data: {roles: ['MEMBER']},
-  loadComponent: () => import('./record-audio/record-audio.component').then(m=> m.RecordAudioComponent),
-
+    data: {roles: ['MEMBER']},
+  loadComponent: () => import('./record-audio/word-list-view/word-list-view.component').then(m=> m.WordListViewComponent),
 },
 {
   path: 'about-us',

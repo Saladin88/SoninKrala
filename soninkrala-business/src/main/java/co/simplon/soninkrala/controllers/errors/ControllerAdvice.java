@@ -80,4 +80,12 @@ public class ControllerAdvice extends ResponseEntityExceptionHandler {
     protected ResponseEntity<Object> handleQuizErrorHandler(QuizErrorMessage error) {
         return new ResponseEntity<>(error.getMessage(), HttpStatus.BAD_REQUEST);
     }
+    @ExceptionHandler(AccountErrorMessage.class)
+    protected ResponseEntity<Object> handleAccountError(AccountErrorMessage error) {
+        return new ResponseEntity<>(error.getMessage(), HttpStatus.NOT_FOUND);
+    }
+    @ExceptionHandler(ReferentialDataError.class)
+    protected ResponseEntity<Object> handleReferentialDataError(ReferentialDataError error) {
+        return new ResponseEntity<>(error.getMessage(), HttpStatus.NOT_FOUND);
+    }
 }

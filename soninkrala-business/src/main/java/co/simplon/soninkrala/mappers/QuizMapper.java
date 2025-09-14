@@ -14,6 +14,10 @@ import static co.simplon.soninkrala.utils.DateHoursUtil.getDateToLocalDateTimeIf
 
 public class QuizMapper {
 
+    private QuizMapper() {
+        //static methods
+    }
+
     public static  QuestionQuiz toQuestionQuiz(QuestionEntity questionEntity) {
         return new QuestionQuiz(questionEntity.getId(),questionEntity.getQuestion(),getDateToLocalDateTimeIfExist(questionEntity.getCreationDate()), questionEntity.getPhoto().getUrlPhoto(), questionEntity.getPhoto().getPictureName());
 

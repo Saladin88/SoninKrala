@@ -1,30 +1,30 @@
-<section>
-    <button mat-icon-button id="record-icon-button">
-        <mat-icon  class="recording-icon" (click)="startRecording()" [fontIcon]="
+<main>
+  <h1>{{wordTitle.toUpperCase()}}</h1>
+  @if(recorderStatus === 'inactive') {
+    <p class="pulse">{{hintStartAudio}}</p>
+  }
+  <div class="button-container">
+    <button mat-icon-button id="record-icon-button" [class.is-recording]="recorderStatus === 'recording'">
+        <mat-icon (click)="toggleRecording($event)" [fontIcon]="
       recorderStatus === 'inactive' ? 'mic' :
-      recorderStatus === 'recording' ? 'pause' :
-      recorderStatus === 'paused' ? 'play_arrow' :
+      recorderStatus === 'recording' ? 'stop_circle' :
       'help_outline'"
-      [ngClass]="{'inactive-icon': recorderStatus === 'inactive', 'recording-icon': recorderStatus === 'recording', 'paused-icon': recorderStatus === 'paused'}"></mat-icon>
+      ></mat-icon>
     </button>
-
-@if (recorderStatus === 'inactive') {
-    <button (click)="startRecording()">Commencer l'enregistrement audio</button>
-  }
-
-  @else if (recorderStatus === 'recording' || recorderStatus === 'paused') {
-    <button (click)="stopRecording()">L'arrêter</button>
-    <button (click)="suspendRecording()">
-      {{ recorderStatus === 'paused' ? 'Reprendre' : 'Suspendre (pause)' }}
-    </button>
-  }
+  </div>
 
   @if (audioUrl) {
-        <audio [src]="audioUrl" controls [controlsList]="'nodownload'"></audio>
-        <button type="submit" (click)="sendRecord($event)">Envoyer</button>
+    <div class="container-column">
+      <audio [src]="audioUrl" controls [controlsList]="'nodownload'"></audio>
+      <button mat-fab extended type="submit" (click)="sendRecord($event)">{{sendButton}}</button>
+    </div>
   }
   @if(resultPronunciation) {
-    <p>{{resultPronunciation.score}}</p>
-    <p>{{resultPronunciation.audioName}}</p>
+      <span [ngClass]="{
+    'good-score': resultPronunciation.score >= 80,
+    'medium-score': resultPronunciation.score >= 50 && resultPronunciation.score < 80,
+    'bad-score': resultPronunciation.score < 50
+      }" class="result">{{scoreLabel.toUpperCase() + ' : ' + resultPronunciation.score + '%'}}</span>
   }
-</section>
+</main>
+

@@ -1,15 +1,35 @@
-.recording-icon {
-    color : red;
+:host {
+  display: block;
+  width: 100%;
+  min-height: 100dvh;
+  background-color: var(--color-primary);
+  padding-top: 6rem;
+  box-sizing: border-box;
 }
-
+main {
+  text-align: center;
+  padding-top: 1rem;
+}
+h1,button {
+  color: var(--color-text);
+}
+span {
+  display: inline-block; /* ou block */
+  margin-top: 5rem;
+}
+p {
+  padding: 2rem 0 ;
+}
 #record-icon-button {
-    width: 25vw;
-    height: 25vw;
+    width: 20vw;
+    height: 20vw;
     border-radius: 50%;
+    background-color: var(--color-accent);
     display: flex;
     align-items: center;
     justify-content: center;
     padding: 0; /* important pour éviter que l'icône sorte */
+    transition: background-color 500ms ease;
   }
   
   /* Agrandir l'icône sans qu'elle dépasse */
@@ -19,8 +39,69 @@
     height: 1em;
     line-height: 1;
   }
-  
-  .recording-icon {
-    color: red;
+  #record-icon-button.is-recording {
+    background-color: var(--color-accent-secondary);
+    animation: pulse 2s infinite;
   }
-  
+
+  .button-container {
+    display: flex;
+    justify-content: center;
+  }
+  button[mat-fab] {  /* selecteur d'attribut */
+    background-color: var(--color-secondary);
+    color: var(--color-text);
+    padding: 1rem 3rem;
+    font-size: 1rem;
+    color: var(--color-text);
+  }
+  .container-column {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-items: center;
+    margin-top: 3rem;
+    gap: 1rem;
+    margin-top: 4rem;
+  }
+  .result {
+    padding: 1.5rem 3rem;
+    color: var(--color-text);
+    border-radius: 10%;
+  }
+
+.good-score {
+  background-color: green;
+}
+
+.medium-score {
+  background-color: var(--color-highlight);
+}
+
+.bad-score {
+  background-color: var(--color-accent-secondary);
+}
+  .pulse {
+    color: var(--color-text);
+    animation: pulse 2s infinite;
+  }
+  .pulse-recording {
+    width: 100px;
+    height: 100px;
+    background-color: var(--color-accent-secondary);
+    border-radius: 50%;
+    color: var(--color-text);
+    animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.1);
+    }
+    100% {
+        transform: scale(1);
+    }
+}

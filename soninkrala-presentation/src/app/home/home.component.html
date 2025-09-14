@@ -1,1 +1,23 @@
-<img src="images/homeImg.jpeg" alt="" />
+<main>
+  <div class="container-narrow">
+    <img src="images/soninkralaBackground.png" alt="" />
+    <h1>{{title}}</h1>
+    <h2 class="italic">{{subTitle}}</h2>
+    <h4>{{description}}</h4>
+  </div>
+</main>
+
+<footer class="sk-footer">
+  <div class="sk-footer-container">
+    <nav class="sk-footer__nav">
+      <a routerLink="/home">Accueil</a>
+      <a routerLink="/cgu-et-confidentialite">CGU &amp; Politique de confidentialité</a>
+      <a href="mailto:contact&#64;outlook.com">Contact</a>
+    </nav>
+
+    <small class="sk-footer__copy">
+      © {{ today | date:'yyyy' }} SoninKrala — Tous droits réservés.
+    </small>
+  </div>
+</footer>
+

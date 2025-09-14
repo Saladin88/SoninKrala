@@ -7,8 +7,10 @@ import co.simplon.soninkrala.controllers.errors.EmailNotVerifiedException;
 import co.simplon.soninkrala.dtos.*;
 import co.simplon.soninkrala.entities.AccountEntity;
 import co.simplon.soninkrala.entities.RoleEntity;
+import co.simplon.soninkrala.entities.TermVersionEntity;
 import co.simplon.soninkrala.jpaRepositories.AccountJpaRepo;
 import co.simplon.soninkrala.jpaRepositories.RoleJpaRepo;
+import co.simplon.soninkrala.jpaRepositories.TermVersionJpaRepo;
 import co.simplon.soninkrala.mappers.AccountMapper;
 import co.simplon.soninkrala.services.AccountService;
 import jakarta.mail.MessagingException;
@@ -33,6 +35,7 @@ public class AccountServiceImpl implements AccountService {
     private final JwtProvider jwtProvider;
     private final AccountJpaRepo accountJpaRepo;
     private final RoleJpaRepo roleJpaRepo;
+    private final TermVersionJpaRepo termVersionJpaRepo;
     private final PasswordEncoder passwordEncoder;
     private final EmailSender emailSender;
 
@@ -44,12 +47,15 @@ public class AccountServiceImpl implements AccountService {
 
     @Value("${co.simplon.soninkrala.email.redirection-url-front}")
     private String redirectionUrlFront;
+    @Value("${co.simplon.soninkrala.rgpd.version}")
+    private String rgpdVersion;
 
-    public AccountServiceImpl(AccountJpaRepo accountJpaRepo, PasswordEncoder passwordEncoder, JwtProvider jwtProvider, RoleJpaRepo roleJpaRepo, EmailSender emailSender) {
+    public AccountServiceImpl(AccountJpaRepo accountJpaRepo, PasswordEncoder passwordEncoder, JwtProvider jwtProvider, RoleJpaRepo roleJpaRepo, TermVersionJpaRepo termVersionJpaRepo, EmailSender emailSender) {
         this.accountJpaRepo = accountJpaRepo;
         this.passwordEncoder = passwordEncoder;
         this.jwtProvider = jwtProvider;
         this.roleJpaRepo = roleJpaRepo;
+        this.termVersionJpaRepo = termVersionJpaRepo;
         this.emailSender = emailSender;
     }
 
@@ -58,7 +64,9 @@ public class AccountServiceImpl implements AccountService {
     public AccountCreationResponse createAccount(AccountCreationRequestBody inputs) {
         AccountEntity account = AccountMapper.toAccountEntity(inputs);
         RoleEntity role = roleJpaRepo.findByName("MEMBER").orElseThrow(() -> new RuntimeException("Default MEMBER role not found"));
+        TermVersionEntity term  = termVersionJpaRepo.findByVersion(rgpdVersion);
         account.setRole(role);
+        account.setIdRgpdVersion(term);
         accountJpaRepo.save(account);
         UUID tokenUUID = UUID.randomUUID();
         account.setUuidToken(tokenUUID);

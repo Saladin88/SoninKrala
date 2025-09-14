@@ -1,3 +1,3 @@
 export const environment= {
-    backBaseUrl: "BACK_BASE_URL"
+    backBaseUrl: "http://localhost:8080/soninkrala/api/v1"
     }

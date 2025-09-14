@@ -4,7 +4,9 @@ import co.simplon.soninkrala.dtos.AudioRecordDto;
 import co.simplon.soninkrala.dtos.PronunciationResultDto;
 import reactor.core.publisher.Mono;
 
+import java.security.Principal;
+
 public interface VoiceRecorderService {
 
-    Mono<PronunciationResultDto> sendRecordToPythonApi(AudioRecordDto audioRecordDto);
+    PronunciationResultDto managePronunciationSendAndSave(Principal principal, AudioRecordDto dto);
 }

@@ -11,14 +11,8 @@
       <a mat-icon-button class="display-icon" [routerLink]="['/alphabet']" routerLinkActive="router-link-active" [routerLinkActiveOptions]="{ exact: true }" *ngIf="getUserRole() === 'MEMBER'">
         Alphabet
       </a>
-      <a mat-icon-button class="display-icon" [routerLink]="['/voice-recorder']" routerLinkActive="router-link-active" [routerLinkActiveOptions]="{ exact: true }" *ngIf="getUserRole() === 'MEMBER'">
-        Recordings
-      </a>
-      <a mat-icon-button class="display-icon">
-        Resources
-      </a>
-      <a mat-icon-button class="display-icon" [routerLink]="['/about-us']" routerLinkActive="router-link-active" [routerLinkActiveOptions]="{ exact: true }">
-        More about us
+      <a mat-icon-button class="display-icon" [routerLink]="['/pronunciations']" routerLinkActive="router-link-active" [routerLinkActiveOptions]="{ exact: true }" *ngIf="getUserRole() === 'MEMBER'">
+        Enregistrements
       </a>
       <a mat-icon-button class="display-icon" [routerLink]="['/contact']" routerLinkActive="router-link-active" [routerLinkActiveOptions]="{ exact: true }" >
         Contact

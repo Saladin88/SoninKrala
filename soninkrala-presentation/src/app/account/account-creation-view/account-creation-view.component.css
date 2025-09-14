@@ -15,15 +15,7 @@ mat-dialog-content {
 
 }
 
-section {
-  background-color: var(--color-secondary);
-}
-
-
 #closeButton {
-  background-color: var(--color-icon-secondary);
-}
-#test {
   background-color: var(--color-icon-secondary);
 }
 mat-form-field{

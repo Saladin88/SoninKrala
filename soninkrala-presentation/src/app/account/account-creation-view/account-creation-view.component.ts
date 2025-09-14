@@ -14,8 +14,9 @@ import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { DialogRef } from '@angular/cdk/dialog';
 import { ApiFieldError, ImmediateErrorStateMatcher } from '../../Validators/errorStateMatcher';
-import configVariable from '../../../config/account-config.json'
-import commonConfigVariable from '../../../config/common-config.json'
+import accountConfigVariable from '../../../config/account-config.json';
+import commonConfigVariable from '../../../config/common-config.json';
+import termsConfigVariable from '../../../config/terms-condition-config.json';
 import { ToasterService } from '../../toaster-service/toaster.service';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 
@@ -29,24 +30,25 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
 export class AccountCreationViewComponent implements OnDestroy {
   errorMatcher = new ImmediateErrorStateMatcher();
 
-  title: string =  configVariable.config.title.register;
-  username: string = configVariable.config.label.username;
-  password: string = configVariable.config.label.password;
-  firstname: string = configVariable.config.label.firstname;
-  lastname: string = configVariable.config.label.lastname;
-  email: string = configVariable.config.label.email;
-  hintUsername: string = configVariable.config.hint.username;
-  hintPassword: string = configVariable.config.hint.password;
-  hintFirstname: string = configVariable.config.hint.firstname;
-  hintLastname: string = configVariable.config.hint.lastname;
-  spaceErrorText: string = configVariable.config.error.space;
-  requiredErrorText: string = configVariable.config.error.required;
-  minLengthErrorText: string = configVariable.config.error.minLengthPassword;
-  emailErrorText: string = configVariable.config.error.email;
-  uniqueUsernameErrorText: string = configVariable.config.error.uniqueUsername;
-  uniqueEmailErrorText: string = configVariable.config.error.uniqueEmail;
-  registerBtnText: string = configVariable.config.action.createAccount;
+  title: string =  accountConfigVariable.config.title.register;
+  username: string = accountConfigVariable.config.label.username;
+  password: string = accountConfigVariable.config.label.password;
+  firstname: string = accountConfigVariable.config.label.firstname;
+  lastname: string = accountConfigVariable.config.label.lastname;
+  email: string = accountConfigVariable.config.label.email;
+  hintUsername: string = accountConfigVariable.config.hint.username;
+  hintPassword: string = accountConfigVariable.config.hint.password;
+  hintFirstname: string = accountConfigVariable.config.hint.firstname;
+  hintLastname: string = accountConfigVariable.config.hint.lastname;
+  spaceErrorText: string = accountConfigVariable.config.error.space;
+  requiredErrorText: string = accountConfigVariable.config.error.required;
+  minLengthErrorText: string = accountConfigVariable.config.error.minLengthPassword;
+  emailErrorText: string = accountConfigVariable.config.error.email;
+  uniqueUsernameErrorText: string = accountConfigVariable.config.error.uniqueUsername;
+  uniqueEmailErrorText: string = accountConfigVariable.config.error.uniqueEmail;
+  registerBtnText: string = accountConfigVariable.config.action.createAccount;
   cancelBtnText: string = commonConfigVariable.config.action.cancelBtn;
+  termsAgreement : string = termsConfigVariable.config.label.acceptTermsAndRgpd;
 
 
   invalidCredentials: boolean = false;
@@ -143,12 +145,12 @@ export class AccountCreationViewComponent implements OnDestroy {
     }
   }
   sucessToaster() {
-    this.toasterService.message = configVariable.config.register.sucessToasterMessage;
+    this.toasterService.message = accountConfigVariable.config.register.sucessToasterMessage;
     this.toasterService.duration= 3;
     this.toasterService.successToaster()
   }
   errorToaster() {
-    this.toasterService.message = configVariable.config.login.errorToasterMessage;
+    this.toasterService.message = accountConfigVariable.config.login.errorToasterMessage;
     this.toasterService.duration= 8;
     this.toasterService.errorToaster()
   }

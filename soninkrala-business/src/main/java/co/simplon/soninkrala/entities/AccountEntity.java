@@ -33,9 +33,16 @@ public class AccountEntity {
     @Column(name="is_verify")
     private boolean verify;
 
+    @ManyToOne
+    @JoinColumn(name = "id_rgpd_version")
+    private TermVersionEntity idRgpdVersion;
+
     @CreationTimestamp
     @Column(name="creation_date")
     private LocalDateTime creationDate;
+    @CreationTimestamp
+    @Column(name = "rgpd_accepted_at")
+    private LocalDateTime rgpdAcceptedAt;
 
     @Column(name="uuid_token")
     private UUID uuidToken;
@@ -120,6 +127,30 @@ public class AccountEntity {
 
     public void setUuidTokenExpiration(LocalDateTime uuidTokenExpiration) {
         this.uuidTokenExpiration = uuidTokenExpiration;
+    }
+
+    public TermVersionEntity getIdRgpdVersion() {
+        return idRgpdVersion;
+    }
+
+    public void setIdRgpdVersion(TermVersionEntity idRgpdVersion) {
+        this.idRgpdVersion = idRgpdVersion;
+    }
+
+    public LocalDateTime getCreationDate() {
+        return creationDate;
+    }
+
+    public void setCreationDate(LocalDateTime creationDate) {
+        this.creationDate = creationDate;
+    }
+
+    public LocalDateTime getRgpdAcceptedAt() {
+        return rgpdAcceptedAt;
+    }
+
+    public void setRgpdAcceptedAt(LocalDateTime rgpdAcceptedAt) {
+        this.rgpdAcceptedAt = rgpdAcceptedAt;
     }
 
     public RoleEntity getRole() {

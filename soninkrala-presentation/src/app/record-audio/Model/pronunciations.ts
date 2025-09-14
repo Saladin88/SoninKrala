@@ -8,3 +8,9 @@ export interface ResultPronunciation {
   audioName : string
   creationDate? : string
 }
+
+export interface Word {
+  id: number
+  wordCode : string
+  wordLabel : string
+}

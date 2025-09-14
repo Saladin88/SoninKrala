@@ -6,7 +6,7 @@ font-size: 1rem;
 }
 .container-header-button {
 display: flex;
-flex : 2 1 auto;
+flex : 3 1 auto;
 justify-content: space-evenly;
 }
 .container-header-account {
@@ -19,7 +19,6 @@ justify-content: space-evenly;
 }
 mat-toolbar {
   background-color: var(--color-primary);
-
 }
 
 mat-toolbar .mat-icon,

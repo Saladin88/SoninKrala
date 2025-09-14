@@ -72,7 +72,8 @@
           {{minLengthErrorText}}
         </mat-error>
       </mat-form-field>
-      <p><mat-checkbox formControlName="isTermsAccepted" required="true">Pepperoni</mat-checkbox></p>
+      <mat-checkbox formControlName="isTermsAccepted" required="true">
+        <a href="/cgu-et-confidentialite" target="_blank">{{termsAgreement}}</a></mat-checkbox>
       <mat-error *ngIf="isTermsAccepted.invalid && (isTermsAccepted.dirty || isTermsAccepted.touched) ">
         {{requiredErrorText}}
       </mat-error>

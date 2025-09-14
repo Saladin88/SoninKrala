@@ -73,8 +73,8 @@ public class SecurityConfig {
                 .authorizeHttpRequests((authorize) -> authorize
                         .requestMatchers(HttpMethod.POST,"/soninkrala/api/v1/accounts","/soninkrala/api/v1/accounts/log-in").anonymous()
                         .requestMatchers(HttpMethod.GET,"/soninkrala/api/v1/quiz", "/soninkrala/api/v1/quiz/{id}/answers","/soninkrala/api/v1/quiz/{id}/questions","/soninkrala/api/v1/alphabet").hasRole("MEMBER")
-                        .requestMatchers(HttpMethod.POST,"/soninkrala/api/v1/quiz","/soninkrala/api/v1/quiz/{id}/correct-answer","/soninkrala/api/v1/pronunciations").hasRole("MEMBER")
-                        .requestMatchers(HttpMethod.GET, "/soninkrala/api/v1/accounts/verify").permitAll()
+                        .requestMatchers(HttpMethod.POST,"/soninkrala/api/v1/quiz","/soninkrala/api/v1/quiz/{id}/correct-answer","/soninkrala/api/v1/pronunciations/{word}/word").hasRole("MEMBER")
+                        .requestMatchers(HttpMethod.GET, "/soninkrala/api/v1/accounts/verify","/soninkrala/api/v1/referential-data/term-and-policy-versions").permitAll()
                         .anyRequest().authenticated())
                 .oauth2ResourceServer((srv) -> srv.jwt(Customizer.withDefaults())  // Configurer le JwtDecoder pour valider les JWT
                 );
