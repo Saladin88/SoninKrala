@@ -21,10 +21,19 @@ MIME_TO_FMT = {
     "audio/x-wav": "wav",
     "audio/mpeg": "mp3",
 }
+
+@app.route("/", methods=["GET"])
+def root():
+    return "OK", 200
+
+@app.route("/healthz", methods=["GET"])
+def healthz():
+    return jsonify(status="ok"), 200
+
 def require_api_key():
     if API_KEY and request.headers.get("Api-Key") != API_KEY:
         abort(403)
-
+        
 @app.route('/compare-pronunciation', methods=['POST'])
 def compare_pronunciation():
     require_api_key()
