@@ -20,6 +20,7 @@ public class PronunciationMapper {
         return accountPronunciation;
     }
 
+
     public static PronunciationResultDto toPronunciationResultDto(AccountPronunciationEntity pronunciationSaved) {
         return new PronunciationResultDto(pronunciationSaved.getWord().getWordLabel(),pronunciationSaved.getSimilarityScore());
     }
