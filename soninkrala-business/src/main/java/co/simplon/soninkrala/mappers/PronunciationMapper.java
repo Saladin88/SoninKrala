@@ -5,6 +5,8 @@ import co.simplon.soninkrala.entities.AccountEntity;
 import co.simplon.soninkrala.entities.AccountPronunciationEntity;
 import co.simplon.soninkrala.entities.WordEntity;
 
+import java.util.Objects;
+
 public class PronunciationMapper {
     private PronunciationMapper() {
         //static methods
@@ -12,7 +14,7 @@ public class PronunciationMapper {
 
     public static AccountPronunciationEntity toPronunciationEntity(PronunciationResultDto result, AccountEntity account, WordEntity word) {
         AccountPronunciationEntity accountPronunciation = new AccountPronunciationEntity();
-        accountPronunciation.setSimilarityScore(result.score());
+        accountPronunciation.setSimilarityScore(Objects.nonNull(result.score()) ? result.score() : 0);
         accountPronunciation.setWord(word);
         accountPronunciation.setAccount(account);
         return accountPronunciation;
